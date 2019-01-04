@@ -15,7 +15,10 @@
       </div>
     </div>
     <div class="bottom">
-      btn
+      <img src="static/camera.png" alt="">
+      <img src="static/mic.png" alt="">
+      <img src="static/beauty-dis.png" alt="">
+      <img src="static/log2.png" alt="">
     </div>
   </div>
 </template>
@@ -75,5 +78,10 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+    padding: 0 25px;
+
+    img {
+      width: 50px;
+    }
   }
 </style>

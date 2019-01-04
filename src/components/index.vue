@@ -23,6 +23,8 @@
 </script>
 
 <style scoped lang="less">
+  @margin: 25px;
+
   h1 {
     text-align: center;
     font-size: 30px;
@@ -32,8 +34,8 @@
 
   input, button {
     display: block;
-    width: calc(100% - 50px);
-    margin: 25px;
+    width: calc(100% - @margin * 2);
+    margin: @margin;
     text-align: center;
     font-size: 16px;
     line-height: 2;

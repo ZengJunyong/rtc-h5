@@ -1,10 +1,18 @@
 <template>
   <div class="container flex">
     <div class="room">
-      <div class="video flex-center">1</div>
-      <div class="video flex-center">2</div>
-      <div class="video flex-center">3</div>
-      <div class="video flex-center">4</div>
+      <div class="video flex-center">
+        <img src="https://miniprogram-1252463788.file.myqcloud.com/roomset_1.png" alt="">
+      </div>
+      <div class="video flex-center">
+        <img src="https://miniprogram-1252463788.file.myqcloud.com/roomset_2.png" alt="">
+      </div>
+      <div class="video flex-center">
+        <img src="https://miniprogram-1252463788.file.myqcloud.com/roomset_3.png" alt="">
+      </div>
+      <div class="video flex-center">
+        <img src="https://miniprogram-1252463788.file.myqcloud.com/roomset_4.png" alt="">
+      </div>
     </div>
     <div class="bottom">
       btn
@@ -38,15 +46,14 @@
 
   .room {
     flex-grow: 1;
-    background-color: #ffffff;
-    background-image: url("https://www.transparenttextures.com/patterns/az-subtle.png");
     padding: 12px 12px 0 12px;
     display: flex;
     flex-wrap: wrap;
 
     .video {
       width: calc(50% - 4px);
-      background: yellowgreen;
+      background-color: #000;
+      opacity: 0.55;
       margin-bottom: 6px;
 
       &:nth-child(odd) {
@@ -55,6 +62,10 @@
 
       &:nth-child(even) {
         margin-left: 2px;
+      }
+
+      img {
+        width: 30px;
       }
     }
   }

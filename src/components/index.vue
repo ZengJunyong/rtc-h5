@@ -32,6 +32,7 @@
     text-align: center;
     font-size: 16px;
     line-height: 2;
+    padding: 5px;
   }
 
   button {
@@ -39,6 +40,7 @@
       background: #3aaafb;
       color: white;
       border-radius: 50px;
+      border: none;
     }
   }
 </style>

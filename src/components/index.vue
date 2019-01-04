@@ -2,7 +2,7 @@
   <div class="container">
     <h1>视频会议系统</h1>
     <input type="number" v-model="room" placeholder="请输入房间号" required>
-    <button class="join">创建/加入房间</button>
+    <button class="join" @click="enterRoom">创建/加入房间</button>
   </div>
 </template>
 
@@ -13,6 +13,11 @@
       return {
         room: ""
       };
+    },
+    methods: {
+      enterRoom() {
+        this.$router.push({ name: "room", query: { room: this.room } });
+      }
     }
   };
 </script>

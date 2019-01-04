@@ -1,17 +1,17 @@
 <template>
   <div class="container">
     <h1>视频会议系统</h1>
-    <input type="text" placeholder="请输入房间号">
+    <input type="number" v-model="room" placeholder="请输入房间号" required>
     <button class="join">创建/加入房间</button>
   </div>
 </template>
 
 <script>
   export default {
-    name: "HelloWorld",
+    name: "index",
     data() {
       return {
-        msg: "Welcome to Your Vue.js App"
+        room: ""
       };
     }
   };

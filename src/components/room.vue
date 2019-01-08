@@ -2,18 +2,20 @@
   <div class="container flex">
     <div class="room">
       <div class="video flex-center">
-        <video v-show="localStream" id="previewVideo" muted autoplay playsinline controls></video>
-        <img v-show="!localStream" src="https://miniprogram-1252463788.file.myqcloud.com/roomset_1.png" alt="">
+        <video v-show="previewVideo" id="previewVideo" muted autoplay playsinline controls></video>
+        <img v-show="!previewVideo" src="https://miniprogram-1252463788.file.myqcloud.com/roomset_1.png" alt="">
       </div>
       <div class="video flex-center">
-        <video v-show="remoteStream" id="remoteVideo" autoplay playsinline controls></video>
-        <img v-show="!remoteStream" src="https://miniprogram-1252463788.file.myqcloud.com/roomset_2.png" alt="">
+        <video v-show="remoteVideo[0]" class="remoteVideo" autoplay playsinline controls></video>
+        <img v-show="!remoteVideo[0]" src="https://miniprogram-1252463788.file.myqcloud.com/roomset_2.png" alt="">
       </div>
       <div class="video flex-center">
-        <img src="https://miniprogram-1252463788.file.myqcloud.com/roomset_3.png" alt="">
+        <video v-show="remoteVideo[1]" class="remoteVideo" autoplay playsinline controls></video>
+        <img v-show="!remoteVideo[1]" src="https://miniprogram-1252463788.file.myqcloud.com/roomset_3.png" alt="">
       </div>
       <div class="video flex-center">
-        <img src="https://miniprogram-1252463788.file.myqcloud.com/roomset_4.png" alt="">
+        <video v-show="remoteVideo[2]" class="remoteVideo" autoplay playsinline controls></video>
+        <img v-show="!remoteVideo[2]" src="https://miniprogram-1252463788.file.myqcloud.com/roomset_4.png" alt="">
       </div>
     </div>
     <div class="bottom">
@@ -26,15 +28,14 @@
 </template>
 
 <script>
-  import rtc from "@/utils/zego.util";
+  import zg from "@/utils/zego";
 
   export default {
     name: "room",
     data() {
       return {
-        room: "",
-        localStream: true,
-        remoteStream: true
+        previewVideo: false,
+        remoteVideo: [false, false, false]
       };
     },
     mounted() {
@@ -42,7 +43,18 @@
     },
     methods: {
       initRTC() {
-        rtc.openRoom('123', 1)
+        zg.openRoom(
+          this.$route.query.room, 1,
+          document.getElementById("previewVideo"),
+          document.querySelectorAll(".remoteVideo"),
+          () => {
+            this.previewVideo = true;
+          },
+          (len) => {
+            for (let i = 0; i < this.remoteVideo.length; i++) {
+              this.remoteVideo.splice(i, 1, i < len)
+            }
+          });
       },
       toggleMute() {
       },

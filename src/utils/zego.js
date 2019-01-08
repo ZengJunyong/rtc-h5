@@ -4,9 +4,9 @@ import Vue from "vue";
 function enumDevices() {
   var audioInputList = [], videoInputList = [];
   zg.enumDevices(deviceInfo => {
-    console.log('enumDevices', deviceInfo);
+    console.log("enumDevices", deviceInfo);
     device = deviceInfo;
-  }, function (error) {
+  }, function(error) {
     console.error("enum device error: " + error);
   });
 }
@@ -31,14 +31,16 @@ var zg,
   },
   loginRoom = false,
   previewVideo,
+  remoteVideos,
   screenCaptrue,
   isPreviewed = false,
   useLocalStreamList = [];
 var anchor_userid = "", anchro_username = "";
 var device;
+var openRoomCallBack, onStreamUpdatedCallBack;
 
 function leaveRoom() {
-  console.info('leave room  and close stream');
+  console.info("leave room  and close stream");
 
   if (isPreviewed) {
     zg.stopPreview(previewVideo);
@@ -51,7 +53,7 @@ function leaveRoom() {
   }
 
   useLocalStreamList = [];
-  $('.remoteVideo').html('');
+  $(".remoteVideo").html("");
   zg.logout();
 }
 
@@ -185,11 +187,29 @@ function listen() {
     },
     onStreamUpdated: function(type, streamList) {
       if (type == 0) {
-        play(streamList[0].stream_id, document.getElementById('remoteVideo'))
+        debugger
+        let len = useLocalStreamList.length
+        for (let i = 0; i < streamList.length; i++) {
+          useLocalStreamList.push(streamList[i]);
+          play(streamList[i].stream_id, remoteVideos[len - 1 + i]);
+        }
+        onStreamUpdatedCallBack(len);
       } else if (type == 1) {
-
+        for (var k = 0; k < useLocalStreamList.length; k++) {
+          for (var j = 0; j < streamList.length; j++) {
+            if (useLocalStreamList[k].stream_id === streamList[j].stream_id) {
+              zg.stopPlayingStream(useLocalStreamList[k].stream_id);
+              console.info(useLocalStreamList[k].stream_id + "was devared");
+              useLocalStreamList.splice(k, 1);
+              break;
+            }
+          }
+        }
       }
-
+      let len = useLocalStreamList.length;
+      for (let i = 0; i < len; i++) {
+        // play(useLocalStreamList[i].stream_id, remoteVideos[i]);
+      }
     }
   };
 
@@ -205,8 +225,6 @@ function listen() {
 
 function init() {
 
-  previewVideo = document.getElementById('previewVideo')
-
   zg = new ZegoClient();
 
   zg.config(_config);
@@ -215,7 +233,17 @@ function init() {
   listen();
 }
 
-function openRoom(roomId, type) {
+/*
+    roomId, type 请参考 zepo 的文档
+    video 表示将视频渲染到本地的DOM
+    callback 通知 vue ，zg 这边完成了
+ */
+function openRoom(roomId, type, video, rVideos, callback1, callback2) {
+
+  previewVideo = video;
+  remoteVideos = rVideos;
+  openRoomCallBack = callback1;
+  onStreamUpdatedCallBack = callback2;
 
   if (!roomId) {
     alert("请输入房间号");
@@ -256,7 +284,7 @@ function loginFailed(err) {
 }
 
 function loginSuccess(streamList, type) {
-  var maxNumber =  4;
+  var maxNumber = 4;
 
   //限制房间最多人数，原因：视频软解码消耗cpu，浏览器之间能支撑的个数会有差异，太多会卡顿
   if (streamList.length >= maxNumber) {
@@ -282,7 +310,7 @@ function doPreviewPublish(config) {
   var quality = 2;
 
   var previewConfig = {
-    "audio":  true,
+    "audio": true,
     "audioInput": device.microphones[0].deviceId || null,
     "video": true,
     "videoInput": device.cameras[0].deviceId || null,
@@ -292,19 +320,20 @@ function doPreviewPublish(config) {
     "externalMediaStream": null
   };
   previewConfig = Vue.util.extend(previewConfig, config);
-  console.log('previewConfig', previewConfig);
-  var result = zg.startPreview(previewVideo, previewConfig, function () {
-    console.log('preview success');
+  console.log("previewConfig", previewConfig);
+  var result = zg.startPreview(previewVideo, previewConfig, function() {
+    console.log("preview success");
+    openRoomCallBack();
     isPreviewed = true;
     publish();
     //部分浏览器会有初次调用摄像头后才能拿到音频和视频设备label的情况，
     enumDevices();
-  }, function (err) {
+  }, function(err) {
     alert(JSON.stringify(err));
-    console.error('preview failed', err);
+    console.error("preview failed", err);
   });
 
-  if (!result) alert('预览失败！')
+  if (!result) alert("预览失败！");
 }
 
 //推流
@@ -317,10 +346,8 @@ function play(streamId, video) {
 
   video.muted = false;
   if (!result) {
-    alert('哎呀，播放失败啦');
-    video.style = 'display:none';
-    console.error("play " + el.nativeElement.id + " return " + result);
-
+    alert("哎呀，播放失败啦");
+    video.style = "display:none";
   }
 }
 

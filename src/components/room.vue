@@ -2,11 +2,11 @@
   <div class="container flex">
     <div class="room">
       <div class="video flex-center">
-        <video v-show="localStream" id="localVideo" muted autoplay playsinline></video>
+        <video v-show="localStream" id="localVideo" muted autoplay playsinline controls></video>
         <img v-show="!localStream" src="https://miniprogram-1252463788.file.myqcloud.com/roomset_1.png" alt="">
       </div>
       <div class="video flex-center">
-        <video v-show="remoteStream" id="remoteVideo" autoplay playsinline></video>
+        <video v-show="remoteStream" id="remoteVideo" autoplay playsinline controls></video>
         <img v-show="!remoteStream" src="https://miniprogram-1252463788.file.myqcloud.com/roomset_2.png" alt="">
       </div>
       <div class="video flex-center">

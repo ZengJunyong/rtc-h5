@@ -334,6 +334,14 @@ function play(streamId, video) {
   }
 }
 
+function enableCamera(enable){
+  zg.enableCamera(previewVideo,enable);
+}
+
+function enableMicrophone(enable){
+  zg.enableMicrophone(previewVideo,enable);
+}
+
 console.log("sdk version is", ZegoClient.getCurrentVersion());
 if (ZegoClient.isSupportWebrtc()) {
   ZegoClient.isSupportH264(result => {
@@ -350,5 +358,7 @@ if (ZegoClient.isSupportWebrtc()) {
 
 export default {
   zg,
-  openRoom
+  openRoom,
+  enableCamera,
+  enableMicrophone
 };

@@ -19,10 +19,8 @@
       </div>
     </div>
     <div class="bottom">
-      <img src="static/camera.png" alt="">
-      <img src="static/mic.png" alt="">
-      <img src="static/beauty-dis.png" alt="">
-      <img src="static/log2.png" alt="">
+      <img :src="'static/camera' + (enableCamera ? '' : '-dis')  + '.png'" @click="toggleCamera" alt="">
+      <img :src="'static/mic'+ (enableMic ? '' : '-dis') +'.png'" @click="toggleMic" alt="">
     </div>
   </div>
 </template>
@@ -35,7 +33,9 @@
     data() {
       return {
         previewVideo: false,
-        remoteVideo: [false, false, false]
+        remoteVideo: [false, false, false],
+        enableCamera: true,
+        enableMic: true
       };
     },
     mounted() {
@@ -52,13 +52,17 @@
           },
           (len) => {
             for (let i = 0; i < this.remoteVideo.length; i++) {
-              this.remoteVideo.splice(i, 1, i < len)
+              this.remoteVideo.splice(i, 1, i < len);
             }
           });
       },
-      toggleMute() {
-      },
       toggleCamera() {
+        this.enableCamera = !this.enableCamera;
+        zg.enableCamera(this.enableCamera);
+      },
+      toggleMic() {
+        this.enableMic = !this.enableMic;
+        zg.enableMicrophone(this.enableMic);
       }
     }
   };

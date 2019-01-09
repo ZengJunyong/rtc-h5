@@ -5,7 +5,9 @@
         <video v-show="previewVideo" id="previewVideo" muted autoplay playsinline controls></video>
         <img v-show="!previewVideo" src="https://miniprogram-1252463788.file.myqcloud.com/roomset_1.png" alt="">
       </div>
-      <div class="video flex-center" :class="r?'':'opacity55'" v-for="(r,i) in remoteVideo">
+      <div class="video flex-center" v-show="lengthOfRemoteVideo<=3? i<3: i<lengthOfRemoteVideo"
+           :class="r?'':'opacity55'"
+           v-for="(r,i) in remoteVideo">
         <video v-show="r" class="remoteVideo" autoplay playsinline controls></video>
         <img v-show="!r" :src="'static/roomset_' + (i+2) + '.png'" alt="">
       </div>
@@ -25,7 +27,9 @@
     data() {
       return {
         previewVideo: false,
-        remoteVideo: [false, false, false, false],
+        remoteVideo: [false, false, false, false, false, false, false, false, false, false,
+          false, false, false, false, false, false, false, false, false],
+        lengthOfRemoteVideo: 0,
         enableCamera: true,
         enableMic: true
       };
@@ -40,6 +44,7 @@
           this.previewVideo = true;
         },
         (len) => {
+          this.lengthOfRemoteVideo = len;
           for (let i = 0; i < this.remoteVideo.length; i++) {
             this.remoteVideo.splice(i, 1, i < len);
           }
@@ -71,6 +76,7 @@
     padding: 12px 12px 0 12px;
     display: flex;
     flex-wrap: wrap;
+    overflow: scroll;
     height: calc(100% - @bottomHeight);
 
     @margin: 2px;

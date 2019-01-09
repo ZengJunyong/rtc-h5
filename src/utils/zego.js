@@ -53,7 +53,6 @@ function leaveRoom() {
   }
 
   useLocalStreamList = [];
-  $(".remoteVideo").html("");
   zg.logout();
 }
 
@@ -273,7 +272,7 @@ function  renderRemoteVideos() {
 }
 
 function loginSuccess(streamList, type) {
-  var maxNumber = 4;
+  var maxNumber = 20;
 
   //限制房间最多人数，原因：视频软解码消耗cpu，浏览器之间能支撑的个数会有差异，太多会卡顿
   if (streamList.length >= maxNumber) {

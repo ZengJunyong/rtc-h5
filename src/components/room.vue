@@ -3,7 +3,7 @@
     <div class="room" :class="lengthOfRemoteVideo<=3?'':'scroll'">
       <div class="video flex-center" :class="previewVideo?'':'opacity55'">
         <video v-show="previewVideo" id="previewVideo" muted autoplay playsinline controls></video>
-        <img v-show="!previewVideo" src="https://miniprogram-1252463788.file.myqcloud.com/roomset_1.png" alt="">
+        <img v-show="!previewVideo" src="static/roomset_1.png" alt="">
       </div>
       <div class="video flex-center" v-show="lengthOfRemoteVideo<=3? i<3: i<lengthOfRemoteVideo"
            :class="r?'':'opacity55'"

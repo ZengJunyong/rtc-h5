@@ -191,9 +191,9 @@ function listen() {
         let len = useLocalStreamList.length
         for (let i = 0; i < streamList.length; i++) {
           useLocalStreamList.push(streamList[i]);
-          play(streamList[i].stream_id, remoteVideos[len - 1 + i]);
+          play(streamList[i].stream_id, remoteVideos[len + i]);
         }
-        onStreamUpdatedCallBack(len);
+        onStreamUpdatedCallBack(len + streamList.length);
       } else if (type == 1) {
         for (var k = 0; k < useLocalStreamList.length; k++) {
           for (var j = 0; j < streamList.length; j++) {

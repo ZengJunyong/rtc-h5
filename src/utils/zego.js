@@ -87,30 +87,8 @@ function listenChild() {
     },
     onUserStateUpdate: function(roomId, userList) {
       console.log("onUserStateUpdate", roomId, userList);
-      userList.forEach(function(item) {
-        if (item.action === 1) {
-          $userList.push(item);
-        } else if (item.action === 2) {
-          $userList.forEach(function(item2, index) {
-            if (item.idName === item2.idName) {
-              $userList.splice(index, 1);
-            }
-          });
-        }
-
-
-      });
-      $("#memberList").html("");
-      $userList.forEach(function(item) {
-        item.idName !== window._config.idName && $("#memberList").append("<option value=\"" + item.idName + "\">" + item.nickName + "</option>");
-      });
     },
     onGetTotalUserList: function(roomId, userList) {
-      var $userList = userList;
-      $("#memberList").html("");
-      $userList.forEach(function(item) {
-        item.idName !== window._config.idName && $("#memberList").append("<option value=\"" + item.idName + "\">" + item.nickName + "</option>");
-      });
       console.log("onGetTotalUserList", roomId, userList);
     }
   };
@@ -187,7 +165,6 @@ function listen() {
     },
     onStreamUpdated: function(type, streamList) {
       if (type == 0) {
-        debugger
         let len = useLocalStreamList.length
         for (let i = 0; i < streamList.length; i++) {
           useLocalStreamList.push(streamList[i]);
@@ -226,6 +203,7 @@ function listen() {
 function init() {
 
   zg = new ZegoClient();
+  zg.setUserStateUpdate(true);//重要  启动用户变化监听
 
   zg.config(_config);
   enumDevices();

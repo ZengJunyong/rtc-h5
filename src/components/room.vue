@@ -1,6 +1,6 @@
 <template>
   <div class="container flex">
-    <div class="room">
+    <div class="room" :class="lengthOfRemoteVideo<=3?'':'scroll'">
       <div class="video flex-center" :class="previewVideo?'':'opacity55'">
         <video v-show="previewVideo" id="previewVideo" muted autoplay playsinline controls></video>
         <img v-show="!previewVideo" src="https://miniprogram-1252463788.file.myqcloud.com/roomset_1.png" alt="">
@@ -71,12 +71,15 @@
 
   @bottomHeight: 90px;
 
+  .scroll {
+    overflow: scroll;
+  }
+
   .room {
     flex-grow: 1;
     padding: 12px 12px 0 12px;
     display: flex;
     flex-wrap: wrap;
-    overflow: scroll;
     height: calc(100% - @bottomHeight);
 
     @margin: 2px;
@@ -108,6 +111,7 @@
     .opacity55 {
       opacity: 0.55;
     }
+
   }
 
   .bottom {

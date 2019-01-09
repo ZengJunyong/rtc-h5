@@ -164,9 +164,11 @@ function listen() {
       console.error("onKickOut " + JSON.stringify(error));
     },
     onStreamUpdated: function(type, streamList) {
+      console.log('onStreamUpdated', type,  streamList);
       if (type == 0) {
         let len = useLocalStreamList.length;
         for (let i = 0; i < streamList.length; i++) {
+          console.info(streamList[i].stream_id + ' was added');
           useLocalStreamList.push(streamList[i]);
           play(streamList[i].stream_id, remoteVideos[len + i]);
         }
@@ -176,7 +178,7 @@ function listen() {
           for (var j = 0; j < streamList.length; j++) {
             if (useLocalStreamList[k].stream_id === streamList[j].stream_id) {
               zg.stopPlayingStream(useLocalStreamList[k].stream_id);
-              console.info(useLocalStreamList[k].stream_id + "was devared");
+              console.info(useLocalStreamList[k].stream_id + " was devared");
               useLocalStreamList.splice(k, 1);
               break;
             }
@@ -358,6 +360,7 @@ if (ZegoClient.isSupportWebrtc()) {
 
 export default {
   zg,
+  init,
   openRoom,
   enableCamera,
   enableMicrophone

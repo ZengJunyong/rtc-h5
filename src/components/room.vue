@@ -31,23 +31,21 @@
       };
     },
     mounted() {
-      this.initRTC();
+      zg.init();
+      zg.openRoom(
+        this.$route.query.room, 1,
+        document.getElementById("previewVideo"),
+        document.querySelectorAll(".remoteVideo"),
+        () => {
+          this.previewVideo = true;
+        },
+        (len) => {
+          for (let i = 0; i < this.remoteVideo.length; i++) {
+            this.remoteVideo.splice(i, 1, i < len);
+          }
+        });
     },
     methods: {
-      initRTC() {
-        zg.openRoom(
-          this.$route.query.room, 1,
-          document.getElementById("previewVideo"),
-          document.querySelectorAll(".remoteVideo"),
-          () => {
-            this.previewVideo = true;
-          },
-          (len) => {
-            for (let i = 0; i < this.remoteVideo.length; i++) {
-              this.remoteVideo.splice(i, 1, i < len);
-            }
-          });
-      },
       toggleCamera() {
         this.enableCamera = !this.enableCamera;
         zg.enableCamera(this.enableCamera);

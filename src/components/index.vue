@@ -11,7 +11,7 @@
     name: "index",
     data() {
       return {
-        room: ""
+        room: "123"
       };
     },
     methods: {

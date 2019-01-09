@@ -56,112 +56,8 @@ function leaveRoom() {
   zg.logout();
 }
 
-function listenChild() {
-  var listens = {
-    onGetAnchorInfo: function(userid, username) {
-      anchor_userid = userid, anchro_username = username;
-    },
-
-    onRecvJoinLiveRequest: function(requestId, from_userid, from_username, roomid) {
-      console.log("onRecvJoinLiveRequest", requestId, from_userid, from_username, roomid);
-      var accept = window.confirm("收到请求连麦");
-      window._fromUserId = from_userid;
-      zg.respondJoinLive(requestId, accept, function(seq) {
-        console.log("respondJoinLive success", seq);
-      }, function(err, seq) {
-        console.log("respondJoinLive err", err, seq);
-      });
-    },
-
-    onRecvInviteJoinLiveRequest: function(requestId, from_userid, from_username, roomid) {
-      console.log("onRecvInviteJoinLiveRequest", requestId, from_userid, from_username, roomid);
-      var accept = window.confirm("收到邀请连麦");
-      accept && doPreviewPublish();
-    },
-
-    onRecvEndJoinLiveCommand: function(requestId, from_userid, from_username, roomid) {
-      console.log("onRecvEndJoinLiveCommand", requestId, from_userid, from_username, roomid);
-      isPreviewed && zg.stopPreview(previewVideo);
-      isPreviewed && zg.stopPublishingStream(_config.idName);
-    },
-    onUserStateUpdate: function(roomId, userList) {
-      console.log("onUserStateUpdate", roomId, userList);
-    },
-    onGetTotalUserList: function(roomId, userList) {
-      console.log("onGetTotalUserList", roomId, userList);
-    }
-  };
-  for (var key in listens) {
-    zg[key] = listens[key];
-  }
-}
-
 function listen() {
   var _config = {
-    onPlayStateUpdate: function(type, streamid, error) {
-      if (type == 0) {
-        console.info("play  success");
-      } else if (type == 2) {
-        console.info("play retry");
-      } else {
-
-        console.error("play error " + error.msg);
-
-        var _msg = error.msg;
-        if (error.msg.indexOf("server session closed, reason: ") > -1) {
-          var code = error.msg.replace("server session closed, reason: ", "");
-          if (code == 21) {
-            _msg = "音频编解码不支持(opus)";
-          } else if (code == 22) {
-            _msg = "视频编解码不支持(H264)";
-          } else if (code == 20) {
-            _msg = "sdp 解释错误";
-          }
-        }
-        alert("拉流失败,reason = " + _msg);
-      }
-
-    },
-    onPublishStateUpdate: function(type, streamid, error) {
-      if (type == 0) {
-        console.info(" publish  success");
-      } else if (type == 2) {
-        console.info(" publish  retry");
-      } else {
-        console.error("publish error " + error.msg);
-        var _msg = error.msg;
-        if (error.msg.indexOf("server session closed, reason: ") > -1) {
-          var code = error.msg.replace("server session closed, reason: ", "");
-          if (code == 21) {
-            _msg = "音频编解码不支持(opus)";
-          } else if (code == 22) {
-            _msg = "视频编解码不支持(H264)";
-          } else if (code == 20) {
-            _msg = "sdp 解释错误";
-          }
-        }
-        alert("推流失败,reason = " + _msg);
-
-      }
-
-    },
-    onPublishQualityUpdate: function(streamid, quality) {
-      console.info("#" + streamid + "#" + "publish " + " audio: " + quality.audioBitrate + " video: " + quality.videoBitrate + " fps: " + quality.videoFPS);
-    },
-
-    onPlayQualityUpdate: function(streamid, quality) {
-      console.info("#" + streamid + "#" + "play " + " audio: " + quality.audioBitrate + " video: " + quality.videoBitrate + " fps: " + quality.videoFPS);
-    },
-
-    onDisconnect: function(error) {
-      console.error("onDisconnect " + JSON.stringify(error));
-      alert("网络连接已断开" + JSON.stringify(error));
-      leaveRoom();
-    },
-
-    onKickOut: function(error) {
-      console.error("onKickOut " + JSON.stringify(error));
-    },
     onStreamUpdated: function(type, streamList) {
       console.log("onStreamUpdated", type, streamList);
       if (type == 0) {
@@ -191,11 +87,6 @@ function listen() {
   for (var key in _config) {
     zg[key] = _config[key];
   }
-
-  if (typeof listenChild === "function") {
-    listenChild();
-  }
-
 }
 
 function init() {

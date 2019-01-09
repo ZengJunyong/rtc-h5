@@ -18,7 +18,7 @@ var zg,
     idName: new Date().getTime() + "",
     nickName: "u" + new Date().getTime(),
     server: "wss://wsliveroom" + appid + "-api.zego.im:8282/ws",//"wss://wsliveroom-alpha.zego.im:8282/ws",
-    logLevel: 0,
+    logLevel: 2,
     logUrl: "",
     remoteLogLevel: 0,
     audienceCreateRoom: true
@@ -165,7 +165,7 @@ function listen() {
     },
     onStreamUpdated: function(type, streamList) {
       if (type == 0) {
-        let len = useLocalStreamList.length
+        let len = useLocalStreamList.length;
         for (let i = 0; i < streamList.length; i++) {
           useLocalStreamList.push(streamList[i]);
           play(streamList[i].stream_id, remoteVideos[len + i]);
@@ -182,10 +182,15 @@ function listen() {
             }
           }
         }
-      }
-      let len = useLocalStreamList.length;
-      for (let i = 0; i < len; i++) {
-        // play(useLocalStreamList[i].stream_id, remoteVideos[i]);
+        // 界面上的2，3，4...为远程用户，如果有人退出，重排列
+        let len = useLocalStreamList.length;
+        for (let i = 0; i < len; i++) {
+          zg.stopPlayingStream(useLocalStreamList[i].stream_id);
+        }
+        for (let i = 0; i < len; i++) {
+          play(useLocalStreamList[i].stream_id, remoteVideos[i]);
+        }
+        onStreamUpdatedCallBack(len);
       }
     }
   };

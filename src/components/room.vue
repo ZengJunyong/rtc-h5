@@ -7,7 +7,7 @@
       </div>
       <div class="video flex-center" :class="r?'':'opacity55'" v-for="(r,i) in remoteVideo">
         <video v-show="r" class="remoteVideo" autoplay playsinline controls></video>
-        <img v-show="!r" :src="'https://miniprogram-1252463788.file.myqcloud.com/roomset_' + (i+2) + '.png'" alt="">
+        <img v-show="!r" :src="'static/roomset_' + (i+2) + '.png'" alt="">
       </div>
     </div>
     <div class="bottom">
@@ -25,7 +25,7 @@
     data() {
       return {
         previewVideo: false,
-        remoteVideo: [false, false, false],
+        remoteVideo: [false, false, false, false],
         enableCamera: true,
         enableMic: true
       };

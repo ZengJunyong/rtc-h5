@@ -164,11 +164,11 @@ function listen() {
       console.error("onKickOut " + JSON.stringify(error));
     },
     onStreamUpdated: function(type, streamList) {
-      console.log('onStreamUpdated', type,  streamList);
+      console.log("onStreamUpdated", type, streamList);
       if (type == 0) {
         let len = useLocalStreamList.length;
         for (let i = 0; i < streamList.length; i++) {
-          console.info(streamList[i].stream_id + ' was added');
+          console.info(streamList[i].stream_id + " was added");
           useLocalStreamList.push(streamList[i]);
           play(streamList[i].stream_id, remoteVideos[len + i]);
         }
@@ -184,15 +184,7 @@ function listen() {
             }
           }
         }
-        // 界面上的2，3，4...为远程用户，如果有人退出，重排列
-        let len = useLocalStreamList.length;
-        for (let i = 0; i < len; i++) {
-          zg.stopPlayingStream(useLocalStreamList[i].stream_id);
-        }
-        for (let i = 0; i < len; i++) {
-          play(useLocalStreamList[i].stream_id, remoteVideos[i]);
-        }
-        onStreamUpdatedCallBack(len);
+        renderRemoteVideos();
       }
     }
   };
@@ -268,6 +260,18 @@ function loginFailed(err) {
 
 }
 
+function  renderRemoteVideos() {
+  // 界面上的2，3，4...为远程用户，如果有人退出，重排列
+  let len = useLocalStreamList.length;
+  for (let i = 0; i < len; i++) {
+    zg.stopPlayingStream(useLocalStreamList[i].stream_id);
+  }
+  for (let i = 0; i < len; i++) {
+    play(useLocalStreamList[i].stream_id, remoteVideos[i]);
+  }
+  onStreamUpdatedCallBack(len);
+}
+
 function loginSuccess(streamList, type) {
   var maxNumber = 4;
 
@@ -279,8 +283,7 @@ function loginSuccess(streamList, type) {
   }
   useLocalStreamList = streamList;
 
-  for (var index = 0; index < useLocalStreamList.length; index++) {
-  }
+  renderRemoteVideos()
   console.log(`login success`);
 
   loginRoom = true;
@@ -336,12 +339,12 @@ function play(streamId, video) {
   }
 }
 
-function enableCamera(enable){
-  zg.enableCamera(previewVideo,enable);
+function enableCamera(enable) {
+  zg.enableCamera(previewVideo, enable);
 }
 
-function enableMicrophone(enable){
-  zg.enableMicrophone(previewVideo,enable);
+function enableMicrophone(enable) {
+  zg.enableMicrophone(previewVideo, enable);
 }
 
 console.log("sdk version is", ZegoClient.getCurrentVersion());

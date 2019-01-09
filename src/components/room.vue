@@ -1,21 +1,13 @@
 <template>
   <div class="container flex">
     <div class="room">
-      <div class="video flex-center">
+      <div class="video flex-center" :class="previewVideo?'':'opacity55'">
         <video v-show="previewVideo" id="previewVideo" muted autoplay playsinline controls></video>
         <img v-show="!previewVideo" src="https://miniprogram-1252463788.file.myqcloud.com/roomset_1.png" alt="">
       </div>
-      <div class="video flex-center">
-        <video v-show="remoteVideo[0]" class="remoteVideo" autoplay playsinline controls></video>
-        <img v-show="!remoteVideo[0]" src="https://miniprogram-1252463788.file.myqcloud.com/roomset_2.png" alt="">
-      </div>
-      <div class="video flex-center">
-        <video v-show="remoteVideo[1]" class="remoteVideo" autoplay playsinline controls></video>
-        <img v-show="!remoteVideo[1]" src="https://miniprogram-1252463788.file.myqcloud.com/roomset_3.png" alt="">
-      </div>
-      <div class="video flex-center">
-        <video v-show="remoteVideo[2]" class="remoteVideo" autoplay playsinline controls></video>
-        <img v-show="!remoteVideo[2]" src="https://miniprogram-1252463788.file.myqcloud.com/roomset_4.png" alt="">
+      <div class="video flex-center" :class="r?'':'opacity55'" v-for="(r,i) in remoteVideo">
+        <video v-show="r" class="remoteVideo" autoplay playsinline controls></video>
+        <img v-show="!r" :src="'https://miniprogram-1252463788.file.myqcloud.com/roomset_' + (i+2) + '.png'" alt="">
       </div>
     </div>
     <div class="bottom">
@@ -89,7 +81,6 @@
       width: calc(50% - @margin);
       height: 50%;
       background-color: #000;
-      opacity: 0.55;
       margin-bottom: 6px;
 
       &:nth-child(odd) {
@@ -108,6 +99,10 @@
       img {
         width: 30px;
       }
+    }
+
+    .opacity55 {
+      opacity: 0.55;
     }
   }
 

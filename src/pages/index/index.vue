@@ -16,11 +16,9 @@
     },
     methods: {
       enterRoom() {
-        this.$router.push({ name: "room", query: { room: this.room } });
-      },
-      bindViewTap() {
-        const url = "../logs/main";
+        const url = "../room/main";
         wx.navigateTo({ url });
+        // this.$router.push({ name: "room", query: { room: this.room } });
       }
     }
   };
@@ -36,7 +34,7 @@
     padding-top: 120px;
   }
 
-  input{
+  input {
     background: white;
     color: black;
   }

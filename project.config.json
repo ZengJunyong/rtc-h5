@@ -10,7 +10,7 @@
 	"miniprogramRoot": "dist/",
 	"compileType": "miniprogram",
 	"appid": "wxf99a7fe96086e53e",
-	"projectname": "mpvue-h5",
+	"projectname": "rtc-h5",
 	"condition": {
 		"search": {
 			"current": -1,

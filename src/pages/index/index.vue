@@ -1,105 +1,62 @@
 <template>
-  <div class="container" @click="clickHandle('test click', $event)">
-
-    <div class="userinfo" @click="bindViewTap">
-      <img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover" />
-      <div class="userinfo-nickname">
-        <card :text="userInfo.nickName"></card>
-      </div>
-    </div>
-
-    <div class="usermotto">
-      <div class="user-motto">
-        <card :text="motto"></card>
-      </div>
-    </div>
-
-    <form class="form-container">
-      <input type="text" class="form-control" v-model="motto" placeholder="v-model" />
-      <input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy" />
-    </form>
-    <a href="/pages/counter/main" class="counter">去往Vuex示例页面</a>
+  <div class="container">
+    <div class="h1">视频会议系统</div>
+    <input type="number" v-model="room" placeholder="请输入房间号" required>
+    <button class="join" @click="enterRoom">创建/加入房间</button>
   </div>
 </template>
 
 <script>
-import card from '@/components/card'
-
-export default {
-  data () {
-    return {
-      motto: 'Hello World',
-      userInfo: {}
-    }
-  },
-
-  components: {
-    card
-  },
-
-  methods: {
-    bindViewTap () {
-      const url = '../logs/main'
-      wx.navigateTo({ url })
+  export default {
+    name: "index",
+    data() {
+      return {
+        room: "123"
+      };
     },
-    getUserInfo () {
-      // 调用登录接口
-      wx.login({
-        success: () => {
-          wx.getUserInfo({
-            success: (res) => {
-              this.userInfo = res.userInfo
-            }
-          })
-        }
-      })
-    },
-    clickHandle (msg, ev) {
-      console.log('clickHandle:', msg, ev)
+    methods: {
+      enterRoom() {
+        this.$router.push({ name: "room", query: { room: this.room } });
+      },
+      bindViewTap() {
+        const url = "../logs/main";
+        wx.navigateTo({ url });
+      }
     }
-  },
-
-  created () {
-    // 调用应用实例的方法获取全局数据
-    this.getUserInfo()
-  }
-}
+  };
 </script>
 
-<style scoped>
-.userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+<style scoped lang="less">
+  @margin: 25px;
 
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
-}
+  .h1 {
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    padding-top: 120px;
+  }
 
-.userinfo-nickname {
-  color: #aaa;
-}
+  input{
+    background: white;
+    color: black;
+  }
 
-.usermotto {
-  margin-top: 150px;
-}
+  input, button {
+    display: block;
+    width: calc(100% - @margin * 2);
+    margin: @margin;
+    text-align: center;
+    font-size: 16px;
+    line-height: 2;
+    padding: 5px;
+  }
 
-.form-control {
-  display: block;
-  padding: 0 12px;
-  margin-bottom: 5px;
-  border: 1px solid #ccc;
-}
-
-.counter {
-  display: inline-block;
-  margin: 10px auto;
-  padding: 5px 10px;
-  color: blue;
-  border: 1px solid blue;
-}
+  button {
+    &.join {
+      background: #3aaafb;
+      color: white;
+      border-radius: 50px;
+      border: none;
+    }
+  }
 </style>

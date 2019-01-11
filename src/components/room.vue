@@ -13,8 +13,12 @@
       </div>
     </div>
     <div class="bottom">
-      <img :src="'static/camera' + (enableCamera ? '' : '-dis')  + '.png'" @click="toggleCamera" alt="">
-      <img :src="'static/mic'+ (enableMic ? '' : '-dis') +'.png'" @click="toggleMic" alt="">
+      <div class="flex-center">
+        <img :src="'static/camera' + (enableCamera ? '' : '-dis')  + '.png'" @click="toggleCamera" alt="">
+      </div>
+      <div class="flex-center">
+        <img :src="'static/mic'+ (enableMic ? '' : '-dis') +'.png'" @click="toggleMic" alt="">
+      </div>
     </div>
   </div>
 </template>
@@ -121,8 +125,15 @@
     align-items: center;
     padding: 0 25px;
 
-    img {
-      width: 50px;
+    div {
+      width: 40px;
+      height: 40px;
+      background: white;
+      border-radius: 50%;
+
+      img {
+        width: 25px;
+      }
     }
   }
 </style>

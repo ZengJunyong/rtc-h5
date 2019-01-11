@@ -23,7 +23,7 @@ app.$mount();
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_mpvue_loader_lib_selector_type_script_index_0_index_vue__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_2c07b857_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_mpvue_loader_lib_template_compiler_index_id_data_v_2c07b857_hasScoped_true_transformToRequire_video_src_source_src_img_src_image_xlink_href_node_modules_mpvue_loader_lib_selector_type_template_index_0_index_vue__ = __webpack_require__(19);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
@@ -83,7 +83,6 @@ if (false) {(function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_card__ = __webpack_require__(2);
 //
 //
 //
@@ -92,169 +91,66 @@ if (false) {(function () {
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
 
 /* harmony default export */ __webpack_exports__["a"] = ({
+  name: "index",
   data: function data() {
     return {
-      motto: 'Hello World',
-      userInfo: {}
+      room: "123"
     };
   },
 
-
-  components: {
-    card: __WEBPACK_IMPORTED_MODULE_0__components_card__["a" /* default */]
-  },
-
   methods: {
-    bindViewTap: function bindViewTap() {
-      var url = '../logs/main';
+    enterRoom: function enterRoom() {
+      var url = "../room/main";
       wx.navigateTo({ url: url });
-    },
-    getUserInfo: function getUserInfo() {
-      var _this = this;
-
-      // 调用登录接口
-      wx.login({
-        success: function success() {
-          wx.getUserInfo({
-            success: function success(res) {
-              _this.userInfo = res.userInfo;
-            }
-          });
-        }
-      });
-    },
-    clickHandle: function clickHandle(msg, ev) {
-      console.log('clickHandle:', msg, ev);
+      // this.$router.push({ name: "room", query: { room: this.room } });
     }
-  },
-
-  created: function created() {
-    // 调用应用实例的方法获取全局数据
-    this.getUserInfo();
   }
 });
 
 /***/ }),
 
-/***/ 22:
+/***/ 19:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "container",
-    attrs: {
-      "eventid": '3'
-    },
-    on: {
-      "click": function($event) {
-        _vm.clickHandle('test click', $event)
-      }
-    }
+    staticClass: "container"
   }, [_c('div', {
-    staticClass: "userinfo",
-    attrs: {
-      "eventid": '0'
-    },
-    on: {
-      "click": _vm.bindViewTap
-    }
-  }, [(_vm.userInfo.avatarUrl) ? _c('img', {
-    staticClass: "userinfo-avatar",
-    attrs: {
-      "src": _vm.userInfo.avatarUrl,
-      "background-size": "cover"
-    }
-  }) : _vm._e(), _vm._v(" "), _c('div', {
-    staticClass: "userinfo-nickname"
-  }, [_c('card', {
-    attrs: {
-      "text": _vm.userInfo.nickName,
-      "mpcomid": '0'
-    }
-  })], 1)]), _vm._v(" "), _c('div', {
-    staticClass: "usermotto"
-  }, [_c('div', {
-    staticClass: "user-motto"
-  }, [_c('card', {
-    attrs: {
-      "text": _vm.motto,
-      "mpcomid": '1'
-    }
-  })], 1)]), _vm._v(" "), _c('form', {
-    staticClass: "form-container"
-  }, [_c('input', {
+    staticClass: "h1"
+  }, [_vm._v("视频会议系统")]), _vm._v(" "), _c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.motto),
-      expression: "motto"
+      value: (_vm.room),
+      expression: "room"
     }],
-    staticClass: "form-control",
     attrs: {
-      "type": "text",
-      "placeholder": "v-model",
-      "eventid": '1'
+      "type": "number",
+      "placeholder": "请输入房间号",
+      "required": "",
+      "eventid": '0'
     },
     domProps: {
-      "value": (_vm.motto)
+      "value": (_vm.room)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.motto = $event.target.value
+        _vm.room = $event.target.value
       }
     }
-  }), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model.lazy",
-      value: (_vm.motto),
-      expression: "motto",
-      modifiers: {
-        "lazy": true
-      }
-    }],
-    staticClass: "form-control",
+  }), _vm._v(" "), _c('button', {
+    staticClass: "join",
     attrs: {
-      "type": "text",
-      "placeholder": "v-model.lazy",
-      "eventid": '2'
-    },
-    domProps: {
-      "value": (_vm.motto)
+      "eventid": '1'
     },
     on: {
-      "change": function($event) {
-        _vm.motto = $event.target.value
-      }
+      "click": _vm.enterRoom
     }
-  })]), _vm._v(" "), _c('a', {
-    staticClass: "counter",
-    attrs: {
-      "href": "/pages/counter/main"
-    }
-  }, [_vm._v("去往Vuex示例页面")])], 1)
+  }, [_vm._v("创建/加入房间")])], 1)
 }
 var staticRenderFns = []
 render._withStripped = true

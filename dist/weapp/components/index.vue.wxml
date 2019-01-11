@@ -1,0 +1,5 @@
+<template name="bdfb7648">
+  <view class="_div data-v-cb642e48 container">
+    <view class="_h1 data-v-cb642e48">视频会议系统</view> <input type="number" value="{{room}}" bindinput="handleProxy" placeholder="请输入房间号" required data-eventid="{{'0'}}" data-comkey="{{$k}}" class="_input data-v-cb642e48" /> <button class="_button data-v-cb642e48 join" bindtap="handleProxy" data-eventid="{{'1'}}" data-comkey="{{$k}}">创建/加入房间</button>
+  </view>
+</template>

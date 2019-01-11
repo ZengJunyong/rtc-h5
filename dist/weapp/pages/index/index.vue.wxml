@@ -1,13 +1,10 @@
-<import src="/components/card.vue.wxml" /><template name="08424752">
-  <view class="_div data-v-2c07b857 container" bindtap="handleProxy" data-eventid="{{'3'}}" data-comkey="{{$k}}">
-    <view class="_div data-v-2c07b857 userinfo" bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}">
-      <image class="_img data-v-2c07b857 userinfo-avatar" wx:if="{{userInfo.avatarUrl}}" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-      <view class="_div data-v-2c07b857 userinfo-nickname"><template data="{{...$root[$kk+'0'], $root}}" is="16b4ecf6"></template></view>
-    </view>
-    <view class="_div data-v-2c07b857 usermotto">
-      <view class="_div data-v-2c07b857 user-motto"><template data="{{...$root[$kk+'1'], $root}}" is="16b4ecf6"></template></view>
-    </view>
-    <form class="_form data-v-2c07b857 form-container"><input type="text" class="_input data-v-2c07b857 form-control" value="{{motto}}" bindinput="handleProxy" placeholder="v-model" data-eventid="{{'1'}}" data-comkey="{{$k}}" /> <input type="text" class="_input data-v-2c07b857 form-control" value="{{motto}}" bindblur="handleProxy" placeholder="v-model.lazy" data-eventid="{{'2'}}" data-comkey="{{$k}}" /></form>
-    <navigator url="/pages/counter/main" class="_a data-v-2c07b857 counter">去往Vuex示例页面</navigator>
+<template name="08424752">
+  <view class="_div data-v-2c07b857 container">
+    <view class="_div data-v-2c07b857 h1">视频会议系统</view>
+    <input type="number" value="{{room}}" bindinput="handleProxy" placeholder="请输入房间号" required data-eventid="{{'0'}}"
+           data-comkey="{{$k}}" class="_input data-v-2c07b857"/>
+    <button class="_button data-v-2c07b857 join" bindtap="handleProxy" data-eventid="{{'1'}}" data-comkey="{{$k}}">
+      创建/加入房间
+    </button>
   </view>
 </template>

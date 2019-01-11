@@ -1,39 +1,27 @@
-@import "../../common/vendor.wxss";
 
-.userinfo.data-v-2c07b857 {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+.h1.data-v-2c07b857 {
+  text-align: center;
+  font-size: 60rpx;
+  font-weight: bold;
+  padding-top: 240rpx;
 }
-.userinfo-avatar.data-v-2c07b857 {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
+input.data-v-2c07b857 {
+  background: white;
+  color: black;
 }
-.userinfo-nickname.data-v-2c07b857 {
-  color: #aaa;
-}
-.usermotto.data-v-2c07b857 {
-  margin-top: 300rpx;
-}
-.form-control.data-v-2c07b857 {
+input.data-v-2c07b857,
+button.data-v-2c07b857 {
   display: block;
-  padding: 0 24rpx;
-  margin-bottom: 10rpx;
-  border: 2rpx solid #ccc;
+  width: calc(100% - 50rpx * 2);
+  margin: 50rpx;
+  text-align: center;
+  font-size: 32rpx;
+  line-height: 2;
+  padding: 10rpx;
 }
-.counter.data-v-2c07b857 {
-  display: inline-block;
-  margin: 20rpx auto;
-  padding: 10rpx 20rpx;
-  color: blue;
-  border: 2rpx solid blue;
+button.join.data-v-2c07b857 {
+  background: #3aaafb;
+  color: white;
+  border-radius: 100rpx;
+  border: none;
 }

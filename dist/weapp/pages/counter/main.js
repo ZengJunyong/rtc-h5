@@ -1,6 +1,6 @@
 require("../../common/manifest.js");
 require("../../common/vendor.js");
-global.webpackJsonp([2],[
+global.webpackJsonp([1],[
 /* 0 */,
 /* 1 */,
 /* 2 */,

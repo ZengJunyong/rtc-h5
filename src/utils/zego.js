@@ -1,6 +1,42 @@
 import { ZegoClient } from "webrtc-zego";
 import Vue from "vue";
 
+function getBrowser() {
+  var ua = window.navigator.userAgent;
+  var isIE = window.ActiveXObject != undefined && ua.indexOf("MSIE") != -1;
+  var isFirefox = ua.indexOf("Firefox") != -1;
+  var isOpera = window.opr != undefined;
+  var isChrome = ua.indexOf("Chrome") && window.chrome;
+  var isSafari = ua.indexOf("Safari") != -1 && ua.indexOf("Version") != -1;
+  if (isIE) {
+    return "IE";
+  } else if (isFirefox) {
+    return "Firefox";
+  } else if (isOpera) {
+    return "Opera";
+  } else if (isChrome) {
+    return "Chrome";
+  } else if (isSafari) {
+    return "Safari";
+  } else {
+    return "Unkown";
+  }
+}
+
+
+function IsPC() {
+  var userAgentInfo = navigator.userAgent;
+  var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");
+  var flag = true;
+  for (var v = 0; v < Agents.length; v++) {
+    if (userAgentInfo.indexOf(Agents[v]) > 0) {
+      flag = false;
+      break;
+    }
+  }
+  return flag;
+}
+
 function enumDevices() {
   var audioInputList = [], videoInputList = [];
   zg.enumDevices(deviceInfo => {
@@ -150,7 +186,7 @@ function loginFailed(err) {
 
 }
 
-function  renderRemoteVideos() {
+function renderRemoteVideos() {
   // 界面上的2，3，4...为远程用户，如果有人退出，重排列
   let len = useLocalStreamList.length;
   for (let i = 0; i < len; i++) {
@@ -173,7 +209,7 @@ function loginSuccess(streamList, type) {
   }
   useLocalStreamList = streamList;
 
-  renderRemoteVideos()
+  renderRemoteVideos();
   console.log(`login success`);
 
   loginRoom = true;
@@ -237,6 +273,51 @@ function enableMicrophone(enable) {
   zg.enableMicrophone(previewVideo, enable);
 }
 
+function enableScreen(enable) {
+  if (IsPC()) {
+    if (enable) {
+      loginRoom && zg.stopPublishingStream(_config.idName);
+      loginRoom && zg.stopPreview(previewVideo);
+
+      var config = {
+        externalMediaStream: null,
+        width: 640,
+        height: 480,
+        frameRate: 15,
+        bitRate: 1000
+      };
+
+      getBrowser() === "Firefox" && zg.startScreenShotFirFox("window", false, function(suc, mediastream) {
+        console.log("startScreenShot:" + suc);
+        screenCaptrue = suc;
+        previewVideo.srcObject = mediastream;
+        // 推送屏幕可有两种形式，一是作为流媒体直接推送 即下面这种形式
+        //另一种是作为externalCapture，前提是需要先将流喂给video标签；，下面chrome推送方式就是这种形式；可任意选择其中之一
+        if (loginRoom) {
+          doPreviewPublish(config);
+        }
+      });
+
+      getBrowser() === "Chrome" && zg.startScreenShotChrome(function(suc, mediastream) {
+        console.log("startScreenShot:" + suc);
+        screenCaptrue = suc;
+        // 推送屏幕可有两种形式，一是作为externalCapture，前提是需要先将流喂给video标签；即下面这种形式
+        //另一种是作为流媒体直接推送，上面火狐推送方式就是这种形式；可任意选择其中之一
+        previewVideo.srcObject = mediastream;
+        if (loginRoom) {
+          doPreviewPublish({ externalCapture: true });
+        }
+      });
+    } else {
+      zg.stopScreenShot();
+      zg.stopPreview(previewVideo);
+      zg.stopPublishingStream(_config.idName);
+
+      doPreviewPublish();
+    }
+  }
+}
+
 console.log("sdk version is", ZegoClient.getCurrentVersion());
 if (ZegoClient.isSupportWebrtc()) {
   ZegoClient.isSupportH264(result => {
@@ -256,5 +337,6 @@ export default {
   init,
   openRoom,
   enableCamera,
-  enableMicrophone
+  enableMicrophone,
+  enableScreen
 };

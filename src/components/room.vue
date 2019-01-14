@@ -19,6 +19,9 @@
       <div class="flex-center">
         <img :src="'static/mic'+ (enableMic ? '' : '-dis') +'.png'" @click="toggleMic" alt="">
       </div>
+      <div class="flex-center">
+        <img :src="'static/screen' + (enableScreen ? '' : '-dis')  + '.png'" @click="toggleScreen" alt="">
+      </div>
     </div>
   </div>
 </template>
@@ -35,7 +38,8 @@
           false, false, false, false, false, false, false, false, false],
         lengthOfRemoteVideo: 0,
         enableCamera: true,
-        enableMic: true
+        enableMic: true,
+        enableScreen: false,
       };
     },
     mounted() {
@@ -62,6 +66,10 @@
       toggleMic() {
         this.enableMic = !this.enableMic;
         zg.enableMicrophone(this.enableMic);
+      },
+      toggleScreen() {
+        this.enableScreen = !this.enableScreen;
+        zg.enableScreen(this.enableScreen);
       }
     }
   };

@@ -14,13 +14,13 @@
     </div>
     <div class="bottom">
       <div class="flex-center">
-        <img :src="'static/camera' + (enableCamera ? '' : '-dis')  + '.png'" @click="toggleCamera" alt="">
+        <img :src="'static/camera' + (enableCamera ? '-dis' : '')  + '.png'" @click="toggleCamera" alt="">
       </div>
       <div class="flex-center">
-        <img :src="'static/mic'+ (enableMic ? '' : '-dis') +'.png'" @click="toggleMic" alt="">
+        <img :src="'static/mic'+ (enableMic ? '-dis' : '') +'.png'" @click="toggleMic" alt="">
       </div>
       <div class="flex-center">
-        <img :src="'static/screen' + (enableScreen ? '' : '-dis')  + '.png'" @click="toggleScreen" alt="">
+        <img :src="'static/screen' + (enableScreen ? '-dis' : '')  + '.png'" @click="toggleScreen" alt="">
       </div>
     </div>
   </div>
@@ -39,11 +39,10 @@
         lengthOfRemoteVideo: 0,
         enableCamera: true,
         enableMic: true,
-        enableScreen: false,
+        enableScreen: false
       };
     },
     mounted() {
-      // zg.init();
       zg.openRoom(
         this.$route.query.room, 1,
         document.getElementById("previewVideo"),
@@ -68,8 +67,12 @@
         zg.enableMicrophone(this.enableMic);
       },
       toggleScreen() {
-        this.enableScreen = !this.enableScreen;
-        zg.enableScreen(this.enableScreen);
+        if (!zg.isSupportShareScreen) {
+          alert("屏幕分享功能只支持桌面系统的Chrome或者Firefox浏览器");
+        } else {
+          this.enableScreen = !this.enableScreen;
+          zg.enableScreen(this.enableScreen);
+        }
       }
     }
   };

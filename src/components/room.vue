@@ -22,6 +22,28 @@
       <div class="flex-center">
         <img :src="'static/screen' + (enableScreen ? '-dis' : '')  + '.png'" @click="toggleScreen" alt="">
       </div>
+      <div class="none">
+        <audio id="screenAudio" autoplay muted playsinline controls></audio>
+        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
+        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
+        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
+        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
+        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
+        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
+        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
+        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
+        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
+        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
+        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
+        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
+        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
+        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
+        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
+        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
+        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
+        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
+        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
+      </div>
     </div>
   </div>
 </template>
@@ -47,6 +69,7 @@
         this.$route.query.room, 1,
         document.getElementById("previewVideo"),
         document.querySelectorAll(".remoteVideo"),
+        document.querySelectorAll(".remoteAudio"),
         () => {
           this.previewVideo = true;
         },
@@ -146,5 +169,9 @@
         width: 25px;
       }
     }
+  }
+
+  .none{
+    display: none;
   }
 </style>

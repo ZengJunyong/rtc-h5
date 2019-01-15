@@ -51,7 +51,8 @@ var zg,
   appid = 3104114736,
   _config = {
     appid: appid * 1,
-    idName: new Date().getTime() + "",
+    idName: "v" + new Date().getTime(),
+    idAudioName: "a" + new Date().getTime(), // begin with 'a' is audio.
     nickName: "u" + new Date().getTime(),
     server: "wss://wsliveroom" + appid + "-api.zego.im:8282/ws",//"wss://wsliveroom-alpha.zego.im:8282/ws",
     logLevel: 2,
@@ -67,10 +68,13 @@ var zg,
   },
   loginRoom = false,
   previewVideo,
+  screenAudio,
   remoteVideos,
+  remoteAudios,
   screenCaptrue,
   isPreviewed = false,
-  useLocalStreamList = [];
+  useLocalStreamList = [],
+  useLocalStreamAudioList = [];
 var anchor_userid = "", anchro_username = "";
 var device;
 var openRoomCallBack, onStreamUpdatedCallBack;
@@ -88,7 +92,12 @@ function leaveRoom() {
     zg.stopPlayingStream(useLocalStreamList[i].stream_id);
   }
 
+  for (var i = 0; i < useLocalStreamAudioList.length; i++) {
+    zg.stopPlayingStream(useLocalStreamAudioList[i].stream_id);
+  }
+
   useLocalStreamList = [];
+  useLocalStreamAudioList = [];
   zg.logout();
 }
 
@@ -98,24 +107,51 @@ function listen() {
       console.log("onStreamUpdated", type, streamList);
       if (type == 0) {
         let len = useLocalStreamList.length;
+        let len2 = useLocalStreamAudioList.length;
+        let lenVideo = 0;
         for (let i = 0; i < streamList.length; i++) {
           console.info(streamList[i].stream_id + " was added");
-          useLocalStreamList.push(streamList[i]);
-          play(streamList[i].stream_id, remoteVideos[len + i]);
+          if (streamList[i].stream_id.charAt(0) === "v") {
+            useLocalStreamList.push(streamList[i]);
+            play(streamList[i].stream_id, remoteVideos[len + i]);
+            lenVideo++;
+          } else {
+            useLocalStreamAudioList.push(streamList[i]);
+            playAudio(streamList[i].stream_id, remoteAudios[len2 + i]);
+          }
         }
-        onStreamUpdatedCallBack(len + streamList.length);
+        onStreamUpdatedCallBack(len + lenVideo);
       } else if (type == 1) {
+        let renderVFlag = false;
         for (var k = 0; k < useLocalStreamList.length; k++) {
           for (var j = 0; j < streamList.length; j++) {
             if (useLocalStreamList[k].stream_id === streamList[j].stream_id) {
               zg.stopPlayingStream(useLocalStreamList[k].stream_id);
               console.info(useLocalStreamList[k].stream_id + " was devared");
               useLocalStreamList.splice(k, 1);
+              renderVFlag = true;
               break;
             }
           }
         }
-        renderRemoteVideos();
+        if (renderVFlag) {
+          renderRemoteVideos();
+        }
+        let renderAFlag = false;
+        for (var k = 0; k < useLocalStreamAudioList.length; k++) {
+          for (var j = 0; j < streamList.length; j++) {
+            if (useLocalStreamAudioList[k].stream_id === streamList[j].stream_id) {
+              zg.stopPlayingStream(useLocalStreamAudioList[k].stream_id);
+              console.info(useLocalStreamAudioList[k].stream_id + " was devared");
+              useLocalStreamAudioList.splice(k, 1);
+              renderAFlag = true;
+              break;
+            }
+          }
+        }
+        if (renderAFlag) {
+          renderRemoteAudios();
+        }
       }
     }
   };
@@ -141,10 +177,11 @@ function init() {
     video 表示将视频渲染到本地的DOM
     callback 通知 vue ，zg 这边完成了
  */
-function openRoom(roomId, type, video, rVideos, callback1, callback2) {
+function openRoom(roomId, type, video, rVideos, rAudios, callback1, callback2) {
 
   previewVideo = video;
   remoteVideos = rVideos;
+  remoteAudios = rAudios;
   openRoomCallBack = callback1;
   onStreamUpdatedCallBack = callback2;
 
@@ -198,6 +235,16 @@ function renderRemoteVideos() {
   onStreamUpdatedCallBack(len);
 }
 
+function renderRemoteAudios() {
+  let len = useLocalStreamAudioList.length;
+  for (let i = 0; i < len; i++) {
+    zg.stopPlayingStream(useLocalStreamAudioList[i].stream_id);
+  }
+  for (let i = 0; i < len; i++) {
+    playAudio(useLocalStreamAudioList[i].stream_id, remoteAudios[i]);
+  }
+}
+
 function loginSuccess(streamList, type) {
   var maxNumber = 20;
 
@@ -207,9 +254,18 @@ function loginSuccess(streamList, type) {
     leaveRoom();
     return;
   }
-  useLocalStreamList = streamList;
+  // useLocalStreamList = streamList;
+
+  streamList.forEach((s) => {
+    if (s.stream_id.charAt(0) === "v") {
+      useLocalStreamList.push(s);
+    } else {
+      useLocalStreamAudioList.push(s);
+    }
+  });
 
   renderRemoteVideos();
+  renderRemoteAudios();
   console.log(`login success`);
 
   loginRoom = true;
@@ -250,13 +306,56 @@ function doPreviewPublish(config) {
   if (!result) alert("预览失败！");
 }
 
+//预览
+function doPreviewPublishAudio(config) {
+  var quality = 2;
+
+  var previewConfig = {
+    "audio": true,
+    "audioInput": device.microphones[0].deviceId || null,
+    "video": false,
+    "videoInput": device.cameras[0].deviceId || null,
+    "videoQuality": quality * 1,
+    "horizontal": true,
+    "externalCapture": false,
+    "externalMediaStream": null
+  };
+  previewConfig = Vue.util.extend(previewConfig, config);
+  console.log("previewConfig", previewConfig);
+  screenAudio = document.getElementById("screenAudio");
+  var result = zg.startPreview(screenAudio, previewConfig, function() {
+    console.log("preview audio success");
+    publishAudio();
+  }, function(err) {
+    alert(JSON.stringify(err));
+    console.error("preview failed", err);
+  });
+
+  if (!result) alert("预览失败！");
+}
+
 //推流
 function publish() {
   zg.startPublishingStream(_config.idName, previewVideo);
 }
 
+//推流
+function publishAudio() {
+  zg.startPublishingStream(_config.idAudioName, screenAudio);
+}
+
 function play(streamId, video) {
   var result = zg.startPlayingStream(streamId, video);
+
+  video.muted = false;
+  if (!result) {
+    alert("哎呀，播放失败啦");
+    video.style = "display:none";
+  }
+}
+
+function playAudio(streamId, video) {
+  var result = zg.startPlayingStream(streamId, video, null, { playType: "audio" });
 
   video.muted = false;
   if (!result) {
@@ -294,6 +393,7 @@ function enableScreen(enable) {
           frameRate: 15,
           bitRate: 1000
         });
+        doPreviewPublishAudio({ "audio": false});
       }
     });
 
@@ -304,7 +404,8 @@ function enableScreen(enable) {
       //另一种是作为流媒体直接推送，上面火狐推送方式就是这种形式；可任意选择其中之一
       previewVideo.srcObject = mediastream;
       if (loginRoom) {
-        doPreviewPublish({ externalCapture: true });
+        doPreviewPublish({ externalCapture: true, "audio": false});
+        doPreviewPublishAudio();
       }
     });
   } else {
@@ -312,6 +413,9 @@ function enableScreen(enable) {
     zg.stopPreview(previewVideo);
     zg.stopPublishingStream(_config.idName);
     doPreviewPublish();
+
+    zg.stopPreview(screenAudio);
+    zg.stopPublishingStream(_config.idAudioName);
   }
 }
 

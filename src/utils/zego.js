@@ -1,4 +1,4 @@
-import { ZegoClient } from "webrtc-zego";
+// import { ZegoClient } from "webrtc-zego";
 import Vue from "vue";
 
 function getBrowser() {
@@ -129,7 +129,7 @@ function init() {
 
   zg = new ZegoClient();
   zg.setUserStateUpdate(true);//重要  启动用户变化监听
-
+  console.log(_config);
   zg.config(_config);
   enumDevices();
 

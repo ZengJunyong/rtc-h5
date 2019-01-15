@@ -43,7 +43,7 @@
       };
     },
     mounted() {
-      zg.init();
+      // zg.init();
       zg.openRoom(
         this.$route.query.room, 1,
         document.getElementById("previewVideo"),

@@ -323,6 +323,7 @@ function doPreviewPublishAudio(config) {
   previewConfig = Vue.util.extend(previewConfig, config);
   console.log("previewConfig", previewConfig);
   screenAudio = document.getElementById("screenAudio");
+  screenAudio.muted = true
   var result = zg.startPreview(screenAudio, previewConfig, function() {
     console.log("preview audio success");
     publishAudio();

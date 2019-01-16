@@ -23,26 +23,26 @@
         <img :src="'static/screen' + (enableScreen ? '-dis' : '')  + '.png'" @click="toggleScreen" alt="">
       </div>
       <div class="none">
-        <audio id="screenAudio" autoplay muted playsinline controls></audio>
-        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
-        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
-        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
-        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
-        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
-        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
-        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
-        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
-        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
-        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
-        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
-        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
-        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
-        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
-        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
-        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
-        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
-        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
-        <audio class="remoteAudio" autoplay muted playsinline controls></audio>
+        <audio id="screenAudio" autoplay muted playsinline></audio>
+        <audio class="remoteAudio" autoplay playsinline></audio>
+        <audio class="remoteAudio" autoplay playsinline></audio>
+        <audio class="remoteAudio" autoplay playsinline></audio>
+        <audio class="remoteAudio" autoplay playsinline></audio>
+        <audio class="remoteAudio" autoplay playsinline></audio>
+        <audio class="remoteAudio" autoplay playsinline></audio>
+        <audio class="remoteAudio" autoplay playsinline></audio>
+        <audio class="remoteAudio" autoplay playsinline></audio>
+        <audio class="remoteAudio" autoplay playsinline></audio>
+        <audio class="remoteAudio" autoplay playsinline></audio>
+        <audio class="remoteAudio" autoplay playsinline></audio>
+        <audio class="remoteAudio" autoplay playsinline></audio>
+        <audio class="remoteAudio" autoplay playsinline></audio>
+        <audio class="remoteAudio" autoplay playsinline></audio>
+        <audio class="remoteAudio" autoplay playsinline></audio>
+        <audio class="remoteAudio" autoplay playsinline></audio>
+        <audio class="remoteAudio" autoplay playsinline></audio>
+        <audio class="remoteAudio" autoplay playsinline></audio>
+        <audio class="remoteAudio" autoplay playsinline></audio>
       </div>
     </div>
   </div>

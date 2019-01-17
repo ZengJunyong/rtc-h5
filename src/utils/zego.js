@@ -109,15 +109,17 @@ function listen() {
         let len = useLocalStreamList.length;
         let len2 = useLocalStreamAudioList.length;
         let lenVideo = 0;
+        let lenAudio = 0;
         for (let i = 0; i < streamList.length; i++) {
           console.info(streamList[i].stream_id + " was added");
           if (streamList[i].stream_id.charAt(0) === "v") {
             useLocalStreamList.push(streamList[i]);
-            play(streamList[i].stream_id, remoteVideos[len + i]);
+            play(streamList[i].stream_id, remoteVideos[len + lenVideo]);
             lenVideo++;
           } else {
             useLocalStreamAudioList.push(streamList[i]);
-            playAudio(streamList[i].stream_id, remoteAudios[len2 + i]);
+            playAudio(streamList[i].stream_id, remoteAudios[len2 + lenAudio]);
+            lenAudio++;
           }
         }
         onStreamUpdatedCallBack(len + lenVideo);

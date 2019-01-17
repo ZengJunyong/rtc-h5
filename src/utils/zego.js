@@ -2,7 +2,6 @@
 import Vue from "vue";
 
 const config = require("../config/zego.config.dev");
-console.log(config);
 
 function getBrowser() {
   var ua = window.navigator.userAgent;

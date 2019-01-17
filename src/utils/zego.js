@@ -1,6 +1,9 @@
 // import { ZegoClient } from "webrtc-zego";
 import Vue from "vue";
 
+const config = require("../config/zego.config.dev");
+console.log(config);
+
 function getBrowser() {
   var ua = window.navigator.userAgent;
   var isIE = window.ActiveXObject != undefined && ua.indexOf("MSIE") != -1;
@@ -48,24 +51,9 @@ function enumDevices() {
 }
 
 var zg,
-  appid = 3104114736,
-  _config = {
-    appid: appid * 1,
-    idName: "v" + new Date().getTime(),
-    idAudioName: "a" + new Date().getTime(), // begin with 'a' is audio.
-    nickName: "u" + new Date().getTime(),
-    server: "wss://wsliveroom" + appid + "-api.zego.im:8282/ws",//"wss://wsliveroom-alpha.zego.im:8282/ws",
-    logLevel: 2,
-    logUrl: "",
-    remoteLogLevel: 0,
-    audienceCreateRoom: true
-  },
-  _otherConfig = {
-    cgi_token: "",
-    roomlist: "",
-    signal: "",
-    token: "https://wsliveroom-demo.zego.im:8282/token"//"https://wsliveroom"+appid+"-api.zego.im:8282/token",
-  },
+  appid = config.appid,
+  _config = config._config,
+  _otherConfig = config._otherConfig,
   loginRoom = false,
   previewVideo,
   screenAudio,
@@ -325,7 +313,7 @@ function doPreviewPublishAudio(config) {
   previewConfig = Vue.util.extend(previewConfig, config);
   console.log("previewConfig", previewConfig);
   screenAudio = document.getElementById("screenAudio");
-  screenAudio.muted = true
+  screenAudio.muted = true;
   var result = zg.startPreview(screenAudio, previewConfig, function() {
     console.log("preview audio success");
     publishAudio();
@@ -396,7 +384,7 @@ function enableScreen(enable) {
           frameRate: 15,
           bitRate: 1000
         });
-        doPreviewPublishAudio({ "audio": false});
+        doPreviewPublishAudio({ "audio": false });
       }
     });
 
@@ -407,7 +395,7 @@ function enableScreen(enable) {
       //另一种是作为流媒体直接推送，上面火狐推送方式就是这种形式；可任意选择其中之一
       previewVideo.srcObject = mediastream;
       if (loginRoom) {
-        doPreviewPublish({ externalCapture: true, "audio": false});
+        doPreviewPublish({ externalCapture: true, "audio": false });
         doPreviewPublishAudio();
       }
     });

@@ -24,25 +24,7 @@
       </div>
       <div class="none">
         <audio id="screenAudio" autoplay muted playsinline></audio>
-        <audio class="remoteAudio" autoplay playsinline></audio>
-        <audio class="remoteAudio" autoplay playsinline></audio>
-        <audio class="remoteAudio" autoplay playsinline></audio>
-        <audio class="remoteAudio" autoplay playsinline></audio>
-        <audio class="remoteAudio" autoplay playsinline></audio>
-        <audio class="remoteAudio" autoplay playsinline></audio>
-        <audio class="remoteAudio" autoplay playsinline></audio>
-        <audio class="remoteAudio" autoplay playsinline></audio>
-        <audio class="remoteAudio" autoplay playsinline></audio>
-        <audio class="remoteAudio" autoplay playsinline></audio>
-        <audio class="remoteAudio" autoplay playsinline></audio>
-        <audio class="remoteAudio" autoplay playsinline></audio>
-        <audio class="remoteAudio" autoplay playsinline></audio>
-        <audio class="remoteAudio" autoplay playsinline></audio>
-        <audio class="remoteAudio" autoplay playsinline></audio>
-        <audio class="remoteAudio" autoplay playsinline></audio>
-        <audio class="remoteAudio" autoplay playsinline></audio>
-        <audio class="remoteAudio" autoplay playsinline></audio>
-        <audio class="remoteAudio" autoplay playsinline></audio>
+        <audio v-for="r in remoteVideo" class="remoteAudio" autoplay playsinline></audio>
       </div>
     </div>
   </div>

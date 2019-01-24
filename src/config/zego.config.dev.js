@@ -6,7 +6,7 @@ module.exports = {
   appid: appid,
   _config: {
     appid: appid,
-    idName: "v" + new Date().getTime(),
+    idName: "v" + new Date().getTime(), // 其实用在了 publishStreamId
     idAudioName: "a" + new Date().getTime(), // begin with 'a' is audio.
     nickName: "u" + new Date().getTime(),
     server: "wss://wsliveroom" + appid + "-api.zego.im:8282/ws",//"wss://wsliveroom-alpha.zego.im:8282/ws",

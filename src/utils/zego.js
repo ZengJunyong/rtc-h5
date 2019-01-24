@@ -337,6 +337,8 @@ function publishAudio() {
 function play(streamId, video) {
   var result = zg.startPlayingStream(streamId, video);
   setTimeout(function() {
+    console.log('1');
+    video.src = URL.createObjectURL(video.srcObject);
     video.load();
   },1000)
 
@@ -349,9 +351,6 @@ function play(streamId, video) {
 
 function playAudio(streamId, video) {
   var result = zg.startPlayingStream(streamId, video, null, { playType: "audio" });
-  setTimeout(function() {
-    video.load();
-  },1000)
 
   video.muted = false;
   if (!result) {

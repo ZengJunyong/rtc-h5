@@ -48,6 +48,12 @@
 </script>
 
 <style scoped lang="less">
+  .container {
+    height: 100%;
+    background-color: #ffffff;
+    background-image: url("https://www.transparenttextures.com/patterns/p5.png");
+  }
+
   .logo {
     padding: 15px 0 60px 0;
   }

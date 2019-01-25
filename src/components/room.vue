@@ -47,20 +47,20 @@
       };
     },
     mounted() {
-      zg.openRoom(
-        this.$route.query.room, 1,
-        document.getElementById("previewVideo"),
-        document.querySelectorAll(".remoteVideo"),
-        document.querySelectorAll(".remoteAudio"),
-        () => {
-          this.previewVideo = true;
-        },
-        (len) => {
-          this.lengthOfRemoteVideo = len;
-          for (let i = 0; i < this.remoteVideo.length; i++) {
-            this.remoteVideo.splice(i, 1, i < len);
-          }
-        });
+      // zg.openRoom(
+      //   this.$route.query.room, 1,
+      //   document.getElementById("previewVideo"),
+      //   document.querySelectorAll(".remoteVideo"),
+      //   document.querySelectorAll(".remoteAudio"),
+      //   () => {
+      //     this.previewVideo = true;
+      //   },
+      //   (len) => {
+      //     this.lengthOfRemoteVideo = len;
+      //     for (let i = 0; i < this.remoteVideo.length; i++) {
+      //       this.remoteVideo.splice(i, 1, i < len);
+      //     }
+      //   });
     },
     methods: {
       toggleCamera() {
@@ -84,6 +84,15 @@
 </script>
 
 <style scoped lang="less">
+  .container {
+    height: 100%;
+    background-color: #333333;
+    background-image: url(https://mc.qcloudimg.com/static/img/7da57e0050d308e2e1b1e31afbc42929/bg.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+  }
+
   .flex {
     display: flex;
     flex-direction: column;
@@ -153,7 +162,7 @@
     }
   }
 
-  .none{
+  .none {
     display: none;
   }
 </style>

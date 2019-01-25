@@ -113,9 +113,10 @@
     .video {
       width: calc(50% - @margin);
       height: 50%;
-      background-color: #000000;
-      background-image: url("https://www.transparenttextures.com/patterns/stressed-linen.png");
-      /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+      background-color: #333333;
+      background-image: url(https://mc.qcloudimg.com/static/img/7da57e0050d308e2e1b1e31afbc42929/bg.png);
+      background-size: cover;
+      background-repeat: no-repeat;
       margin-bottom: 6px;
 
       &:nth-child(odd) {

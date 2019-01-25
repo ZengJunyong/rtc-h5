@@ -1,8 +1,32 @@
 <template>
   <div class="container">
-    <h1>视频会议系统</h1>
-    <input type="number" v-model="room" placeholder="请输入房间号" required>
-    <button class="join" @click="enterRoom">创建/加入房间</button>
+    <div class="flex-center logo">
+      <img src="static/logo.png" alt="">
+    </div>
+    <div class="flex">
+      <div>
+        <div>
+          <h2>加入一场会议</h2>
+          <input type="number" v-model="room" placeholder="会议编号" required>
+          <p>会议编号是6位数字</p>
+          <button @click="enterRoom">加入</button>
+        </div>
+      </div>
+      <div>
+        <div>
+          <h2>发起一场会议</h2>
+          <div class="radio">
+            <input type="radio" id="open" value="1" v-model="video">
+            <label for="open">视频开启</label>
+          </div>
+          <div class="radio">
+            <input type="radio" id="close" value="0" v-model="video">
+            <label for="close">视频关闭</label>
+          </div>
+          <button>发起</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -11,7 +35,8 @@
     name: "index",
     data() {
       return {
-        room: "123"
+        room: "",
+        video: 1
       };
     },
     methods: {
@@ -23,31 +48,56 @@
 </script>
 
 <style scoped lang="less">
-  @margin: 25px;
-
-  h1 {
-    text-align: center;
-    font-size: 30px;
-    font-weight: bold;
-    padding-top: 120px;
+  .logo {
+    padding: 15px 0 60px 0;
   }
 
-  input, button {
-    display: block;
-    width: calc(100% - @margin * 2);
-    margin: @margin;
-    text-align: center;
-    font-size: 16px;
-    line-height: 2;
-    padding: 5px;
-  }
+  .flex {
+    display: flex;
 
-  button {
-    &.join {
-      background: #3aaafb;
-      color: white;
-      border-radius: 50px;
-      border: none;
+    > div {
+      flex-grow: 1;
+      padding: 40px 0;
+      text-align: center;
+
+      &:first-child {
+        border-right: 1px solid #d1d1d1;
+      }
+
+      > div {
+        width: 200px;
+        margin: auto;
+        text-align: left;
+
+        h2 {
+          font-size: 28px;
+          padding-bottom: 25px;
+        }
+
+        p {
+          color: gray;
+          padding: 10px 0 20px 0;
+        }
+
+        .radio {
+          padding-bottom: 21px;
+        }
+
+        input[type="number"] {
+          display: block;
+          width: 100%;
+          font-size: 18px;
+          line-height: 1.5;
+          padding: 5px;
+        }
+
+        button {
+          background: #0065f2;
+          color: white;
+          width: 100px;
+          padding: 8px;
+        }
+      }
     }
   }
 </style>

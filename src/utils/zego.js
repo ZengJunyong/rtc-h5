@@ -336,11 +336,16 @@ function publishAudio() {
 
 function play(streamId, video) {
   var result = zg.startPlayingStream(streamId, video);
-  setTimeout(function() {
-    console.log('1');
-    video.src = URL.createObjectURL(video.srcObject);
-    video.load();
-  },1000)
+
+  video.addEventListener("error", function(e,a,b,c) {
+    console.log(e, a, b, c);
+  });
+
+  // setTimeout(function() {
+  //   console.log('1');
+  //   video.src = URL.createObjectURL(video.srcObject);
+  //   video.load();
+  // },1000)
 
   video.muted = false;
   if (!result) {

@@ -13,14 +13,33 @@
       </div>
     </div>
     <div class="bottom">
-      <div class="flex-center">
-        <img :src="'static/camera' + (enableCamera ? '-dis' : '')  + '.png'" @click="toggleCamera" alt="">
+      <div>
+        <div>
+          <img :src="'static/camera.png'" @click="toggleCamera" alt="">
+          开启视频
+        </div>
+        <div>
+          <img :src="'static/mic.png'" @click="toggleMic" alt="">
+          关闭声音
+        </div>
+        <div>
+          <img :src="'static/screen.png'" @click="toggleScreen" alt="">
+          屏幕分享
+        </div>
       </div>
-      <div class="flex-center">
-        <img :src="'static/mic'+ (enableMic ? '-dis' : '') +'.png'" @click="toggleMic" alt="">
-      </div>
-      <div class="flex-center">
-        <img :src="'static/screen' + (enableScreen ? '-dis' : '')  + '.png'" @click="toggleScreen" alt="">
+      <div class="flex-end">
+        <div>
+          <img :src="'static/link.png'" alt="">
+          复制链接
+        </div>
+        <div>
+          <img :src="'static/invite.png'" alt="">
+          邀请朋友
+        </div>
+        <div>
+          <span class="flex-center">548906</span>
+          会议编号
+        </div>
       </div>
       <div class="none">
         <audio id="screenAudio" autoplay muted playsinline></audio>
@@ -95,7 +114,7 @@
     flex-direction: column;
   }
 
-  @bottomHeight: 90px;
+  @bottomHeight: 80px;
 
   .scroll {
     overflow: scroll;
@@ -115,7 +134,6 @@
       height: 50%;
       background-color: #333333;
       background-image: url(https://mc.qcloudimg.com/static/img/7da57e0050d308e2e1b1e31afbc42929/bg.png);
-      background-size: cover;
       background-repeat: no-repeat;
       margin-bottom: 6px;
 
@@ -146,23 +164,57 @@
   .bottom {
     height: @bottomHeight;
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 0 25px;
+    justify-content: space-between;
+    padding: 0 12px;
 
     div {
-      width: 40px;
-      height: 40px;
-      background: white;
-      border-radius: 50%;
+      display: flex;
+      align-items: center;
 
-      img {
-        width: 25px;
+      div {
+        padding-top: 8px;
+        flex-direction: column;
+        font-size: 12px;
+
+        img {
+          width: 30px;
+          margin-bottom: 4px;
+        }
       }
+    }
+
+    > div:first-child {
+      flex-grow: 1;
+
+      div {
+        margin-right: 30px;
+      }
+    }
+
+    > div:nth-child(2) {
+      div {
+        margin-left: 30px;
+      }
+    }
+
+    span{
+      width: 100%;
+      height: 30px;
+      background: white;
+      padding: 0 5px;
+      margin-bottom: 4px;
+      color: black;
+      border-radius: 5px;
+      font-size: 18px;
+      font-weight: bold;
     }
   }
 
   .none {
     display: none;
+  }
+
+  .flex-end {
+    justify-content: flex-end;
   }
 </style>

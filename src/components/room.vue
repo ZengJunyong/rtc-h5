@@ -16,11 +16,17 @@
       <div>
         <div>
           <img :src="'static/camera.png'" @click="toggleCamera" alt="">
-          开启视频
+          <div class="circle">
+            <i class="red"></i>
+            开启视频
+          </div>
         </div>
         <div>
           <img :src="'static/mic.png'" @click="toggleMic" alt="">
-          关闭声音
+          <div class="circle">
+            <i class="green"></i>
+            关闭声音
+          </div>
         </div>
         <div>
           <img :src="'static/screen.png'" @click="toggleScreen" alt="">
@@ -189,6 +195,27 @@
 
       div {
         margin-right: 30px;
+      }
+
+      .circle {
+        margin: 0;
+        flex-direction: row;
+        padding: 0;
+
+        i {
+          width: 10px;
+          height: 10px;
+          border-radius: 5px;
+          margin-right: 4px;
+        }
+
+        i.red {
+          background: #cc1525;
+        }
+
+        i.green {
+          background: #83d13c;
+        }
       }
     }
 

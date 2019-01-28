@@ -14,18 +14,18 @@
     </div>
     <div class="bottom">
       <div>
-        <div @click="toggleCamera" >
+        <div @click="toggleCamera">
           <img src="static/camera.png" alt="">
           <div class="circle">
             <i :class="enableCamera?'green':'red'"></i>
-            {{enableCamera?'关闭视频':'开启视频'}}
+            {{enableCamera?"关闭视频":"开启视频"}}
           </div>
         </div>
         <div @click="toggleMic">
           <img src="static/mic.png" alt="">
           <div class="circle">
             <i :class="enableMic?'green':'red'"></i>
-            {{enableMic?'关闭声音':'开启声音'}}
+            {{enableMic?"关闭声音":"开启声音"}}
           </div>
         </div>
         <div @click="toggleScreen">
@@ -34,7 +34,7 @@
         </div>
       </div>
       <div>
-        <div>
+        <div @click="copyToClipboard">
           <img :src="'static/link.png'" alt="">
           复制链接
         </div>
@@ -103,6 +103,20 @@
           this.enableScreen = !this.enableScreen;
           zg.enableScreen(this.enableScreen);
         }
+      },
+      copyToClipboard() {
+        let str = '您好，快来加入视频会议吧，我在这儿等你：https://zengjunyong.github.io/rtc-h5/dist/h5/#/room?room=123'
+        // https://hackernoon.com/copying-text-to-clipboard-with-javascript-df4d4988697f
+        const el = document.createElement("textarea");
+        el.value = str;
+        el.setAttribute("readonly", "");
+        el.style.position = "absolute";
+        el.style.left = "-9999px";
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand("copy");
+        document.body.removeChild(el);
+        alert('会议的链接已经复制到剪贴板，请通过邮件，微信等发送给他人即可加入该会议。')
       }
     }
   };

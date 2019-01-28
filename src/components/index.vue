@@ -23,7 +23,7 @@
             <input type="radio" id="close" value="0" v-model="video">
             <label for="close">视频关闭</label>
           </div>
-          <button>发起</button>
+          <button @click="createRoom">发起</button>
         </div>
       </div>
     </div>
@@ -46,8 +46,18 @@
         if (reg.test(this.room)) {
           this.$router.push({ name: "room", query: { room: this.room } });
         } else {
-          this.validate = false
+          this.validate = false;
         }
+      },
+      createRoom() {
+        let room;
+        while (1) { // TODO: 生成一个6位数的房号，注意如果该房号存在了要如何判断去重？
+          room = Math.floor(Math.random() * 1000000);
+          if (room > 100000) {
+            break;
+          }
+        }
+        this.$router.push({ name: "room", query: { room, video: this.video } });
       }
     }
   };
@@ -91,7 +101,7 @@
           padding: 10px 0 20px 0;
         }
 
-        p.error{
+        p.error {
           color: red;
         }
 

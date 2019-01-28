@@ -29,8 +29,8 @@
           </div>
         </div>
         <div @click="toggleScreen">
-          <img :src="'static/screen.png'" alt="">
-          屏幕分享
+          <img :src="'static/screen' + (enableScreen ? '-dis' : '')  + '.png'" alt="">
+          {{enableScreen?"关闭分享":"屏幕分享"}}
         </div>
       </div>
       <div>

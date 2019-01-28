@@ -8,7 +8,7 @@
         <div>
           <h2>加入一场会议</h2>
           <input type="number" v-model="room" placeholder="会议编号" required>
-          <p>会议编号是6位数字</p>
+          <p :class="validate?'':'error'">会议编号是6位数字</p>
           <button @click="enterRoom">加入</button>
         </div>
       </div>
@@ -36,7 +36,8 @@
     data() {
       return {
         room: "",
-        video: 1
+        video: 1,
+        validate: true
       };
     },
     methods: {
@@ -45,7 +46,7 @@
         if (reg.test(this.room)) {
           this.$router.push({ name: "room", query: { room: this.room } });
         } else {
-          alert("会议编号是6位数字");
+          this.validate = false
         }
       }
     }
@@ -88,6 +89,10 @@
         p {
           color: gray;
           padding: 10px 0 20px 0;
+        }
+
+        p.error{
+          color: red;
         }
 
         .radio {

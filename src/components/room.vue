@@ -14,22 +14,22 @@
     </div>
     <div class="bottom">
       <div>
-        <div>
-          <img :src="'static/camera.png'" @click="toggleCamera" alt="">
+        <div @click="toggleCamera" >
+          <img src="static/camera.png" alt="">
           <div class="circle">
-            <i class="red"></i>
-            开启视频
+            <i :class="enableCamera?'green':'red'"></i>
+            {{enableCamera?'关闭视频':'开启视频'}}
           </div>
         </div>
-        <div>
-          <img :src="'static/mic.png'" @click="toggleMic" alt="">
+        <div @click="toggleMic">
+          <img src="static/mic.png" alt="">
           <div class="circle">
-            <i class="green"></i>
-            关闭声音
+            <i :class="enableMic?'green':'red'"></i>
+            {{enableMic?'关闭声音':'开启声音'}}
           </div>
         </div>
-        <div>
-          <img :src="'static/screen.png'" @click="toggleScreen" alt="">
+        <div @click="toggleScreen">
+          <img :src="'static/screen.png'" alt="">
           屏幕分享
         </div>
       </div>

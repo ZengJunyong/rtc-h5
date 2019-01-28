@@ -43,7 +43,7 @@
           邀请朋友
         </div>
         <div>
-          <span class="flex-center">548906</span>
+          <span class="flex-center">{{room}}</span>
           会议编号
         </div>
       </div>
@@ -72,20 +72,28 @@
       };
     },
     mounted() {
-      // zg.openRoom(
-      //   this.$route.query.room, 1,
-      //   document.getElementById("previewVideo"),
-      //   document.querySelectorAll(".remoteVideo"),
-      //   document.querySelectorAll(".remoteAudio"),
-      //   () => {
-      //     this.previewVideo = true;
-      //   },
-      //   (len) => {
-      //     this.lengthOfRemoteVideo = len;
-      //     for (let i = 0; i < this.remoteVideo.length; i++) {
-      //       this.remoteVideo.splice(i, 1, i < len);
-      //     }
-      //   });
+      zg.openRoom(
+        this.room, 1,
+        document.getElementById("previewVideo"),
+        document.querySelectorAll(".remoteVideo"),
+        document.querySelectorAll(".remoteAudio"),
+        () => {
+          this.previewVideo = true;
+          if (this.$route.query.video === "0") {
+            this.toggleCamera();
+          }
+        },
+        (len) => {
+          this.lengthOfRemoteVideo = len;
+          for (let i = 0; i < this.remoteVideo.length; i++) {
+            this.remoteVideo.splice(i, 1, i < len);
+          }
+        });
+    },
+    computed: {
+      room() {
+        return this.$route.query.room + "";
+      }
     },
     methods: {
       toggleCamera() {
@@ -105,7 +113,7 @@
         }
       },
       copyToClipboard() {
-        let str = '您好，快来加入视频会议吧，我在这儿等你：https://zengjunyong.github.io/rtc-h5/dist/h5/#/room?room=123'
+        let str = "您好，快来加入视频会议吧，我在这儿等你：" + location.origin + "#/room?room=" + this.room;
         // https://hackernoon.com/copying-text-to-clipboard-with-javascript-df4d4988697f
         const el = document.createElement("textarea");
         el.value = str;
@@ -116,7 +124,7 @@
         el.select();
         document.execCommand("copy");
         document.body.removeChild(el);
-        alert('会议的链接已经复制到剪贴板，请通过邮件，微信等发送给他人即可加入该会议。')
+        alert("会议的链接已经复制到剪贴板，请通过邮件，微信等发送给他人即可加入该会议。");
       }
     }
   };

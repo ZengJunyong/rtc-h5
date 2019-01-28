@@ -41,7 +41,12 @@
     },
     methods: {
       enterRoom() {
-        this.$router.push({ name: "room", query: { room: this.room } });
+        let reg = /^^[1-9]\d{5}$$/; // 6位数字的正则表达式
+        if (reg.test(this.room)) {
+          this.$router.push({ name: "room", query: { room: this.room } });
+        } else {
+          alert("会议编号是6位数字");
+        }
       }
     }
   };

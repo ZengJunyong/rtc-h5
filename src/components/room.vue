@@ -27,7 +27,7 @@
           屏幕分享
         </div>
       </div>
-      <div class="flex-end">
+      <div>
         <div>
           <img :src="'static/link.png'" alt="">
           复制链接
@@ -135,6 +135,7 @@
       background-color: #333333;
       background-image: url(https://mc.qcloudimg.com/static/img/7da57e0050d308e2e1b1e31afbc42929/bg.png);
       background-repeat: no-repeat;
+      background-size: cover;
       margin-bottom: 6px;
 
       &:nth-child(odd) {
@@ -156,7 +157,7 @@
     }
 
     .opacity55 {
-      /*opacity: 0.55;*/
+      opacity: 0.75;
     }
 
   }
@@ -171,7 +172,7 @@
       display: flex;
       align-items: center;
 
-      div {
+      > div {
         padding-top: 8px;
         flex-direction: column;
         font-size: 12px;
@@ -197,7 +198,7 @@
       }
     }
 
-    span{
+    span {
       width: 100%;
       height: 30px;
       background: white;
@@ -214,7 +215,4 @@
     display: none;
   }
 
-  .flex-end {
-    justify-content: flex-end;
-  }
 </style>

@@ -72,12 +72,14 @@
       };
     },
     mounted() {
+      // TODO remove it begin
       if (window.Android) {
         let android = window.Android.checkTune();
         alert(android);
       } else {
         console.log("Android Object is not exists");
       }
+      // TODO remove it end
       zg.openRoom(
         this.room, 1,
         document.getElementById("previewVideo"),

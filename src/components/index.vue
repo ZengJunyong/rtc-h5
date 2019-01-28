@@ -9,7 +9,7 @@
           <h2>加入一场会议</h2>
           <input type="number" v-model="room" placeholder="会议编号" required>
           <p :class="validate?'':'error'">会议编号是6位数字</p>
-          <button @click="enterRoom">加入</button>
+          <button @click="joinRoom">加入</button>
         </div>
       </div>
       <div>
@@ -41,7 +41,7 @@
       };
     },
     methods: {
-      enterRoom() {
+      joinRoom() {
         let reg = /^^[1-9]\d{5}$$/; // 6位数字的正则表达式
         if (reg.test(this.room)) {
           this.$router.push({ name: "room", query: { room: this.room } });

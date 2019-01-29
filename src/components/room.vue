@@ -28,7 +28,7 @@
             {{enableMic?"关闭声音":"开启声音"}}
           </div>
         </div>
-        <div @click="toggleScreen">
+        <div v-if="isSupportShareScreen" @click="toggleScreen">
           <img :src="'static/screen' + (enableScreen ? '-dis' : '')  + '.png'" alt="">
           {{enableScreen?"关闭分享":"屏幕分享"}}
         </div>
@@ -101,6 +101,9 @@
     computed: {
       room() {
         return this.$route.query.room + "";
+      },
+      isSupportShareScreen() {
+        return zg.isSupportShareScreen; // 屏幕分享功能只支持桌面系统的Chrome或者Firefox浏览器
       }
     },
     methods: {
@@ -113,12 +116,8 @@
         zg.enableMicrophone(this.enableMic);
       },
       toggleScreen() {
-        if (!zg.isSupportShareScreen) {
-          alert("屏幕分享功能只支持桌面系统的Chrome或者Firefox浏览器");
-        } else {
-          this.enableScreen = !this.enableScreen;
-          zg.enableScreen(this.enableScreen);
-        }
+        this.enableScreen = !this.enableScreen;
+        zg.enableScreen(this.enableScreen);
       },
       copyToClipboard() {
         let str = "您好，快来加入视频会议吧，我在这儿等你：" + location.origin + "#/room?room=" + this.room;

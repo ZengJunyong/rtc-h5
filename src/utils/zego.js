@@ -341,11 +341,11 @@ function play(streamId, video) {
   //   console.log(e, a, b, c);
   // });
 
-  setTimeout(function() {
-    console.log('1');
-    video.src = URL.createObjectURL(video.srcObject);
-    video.load();
-  },1000)
+  // setTimeout(function() {
+  //   console.log('1');
+  //   video.src = URL.createObjectURL(video.srcObject);
+  //   video.load();
+  // },1000)
 
   video.muted = false;
   if (!result) {

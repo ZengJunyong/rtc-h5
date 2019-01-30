@@ -338,16 +338,6 @@ function publishAudio() {
 function play(streamId, video) {
   var result = zg.startPlayingStream(streamId, video);
 
-  // video.addEventListener("error", function(e,a,b,c) {
-  //   console.log(e, a, b, c);
-  // });
-
-  // setTimeout(function() {
-  //   console.log('1');
-  //   video.src = URL.createObjectURL(video.srcObject);
-  //   video.load();
-  // },1000)
-
   video.muted = false;
   if (!result) {
     alert("哎呀，播放失败啦");

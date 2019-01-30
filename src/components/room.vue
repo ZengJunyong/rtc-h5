@@ -75,14 +75,20 @@
         enableScreen: false
       };
     },
+    beforeCreate() {
+      // Safari on Iphone 上有一个bug，跳转到 room 页面，要强制刷新一下，WebRTC才可使用
+      if (this.$route.params.isSafariOnIphone) {
+        location.reload(true)
+      }
+    },
     mounted() {
       // TODO remove it begin
-      if (window.Android) {
-        let android = window.Android.checkTune();
-        alert(android);
-      } else {
-        console.log("Android Object is not exists");
-      }
+      // if (window.Android) {
+      //   let android = window.Android.checkTune();
+      //   alert(android);
+      // } else {
+      //   console.log("Android Object is not exists");
+      // }
       // TODO remove it end
       zg.openRoom(
         this.room, 1,
@@ -139,7 +145,7 @@
       },
       endMeeting() {
         zg.leaveRoom();
-        this.$router.push({ name: "index"});
+        this.$router.push({ name: "index" });
       }
     }
   };

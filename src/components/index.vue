@@ -40,11 +40,21 @@
         validate: true
       };
     },
+    computed: {
+      isSafariOnIphone() {
+        let ua = window.navigator.userAgent;
+        return ua.indexOf("Safari") != -1 && ua.indexOf("Version") != -1 && ua.indexOf("iPhone") != -1;
+      }
+    },
     methods: {
       joinRoom() {
         let reg = /^^[1-9]\d{5}$$/; // 6位数字的正则表达式
         if (reg.test(this.room)) {
-          this.$router.push({ name: "room", query: { room: this.room } });
+          this.$router.push({
+            name: "room",
+            query: { room: this.room },
+            params: { isSafariOnIphone: this.isSafariOnIphone }
+          });
         } else {
           this.validate = false;
         }
@@ -57,7 +67,11 @@
             break;
           }
         }
-        this.$router.push({ name: "room", query: { room, video: this.video } });
+        this.$router.push({
+          name: "room",
+          query: { room, video: this.video },
+          params: { isSafariOnIphone: this.isSafariOnIphone }
+        });
       }
     }
   };

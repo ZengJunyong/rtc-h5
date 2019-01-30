@@ -440,5 +440,6 @@ export default {
   enableCamera,
   enableMicrophone,
   isSupportShareScreen,
-  enableScreen
+  enableScreen,
+  leaveRoom
 };

@@ -35,12 +35,16 @@
       </div>
       <div>
         <div @click="copyToClipboard">
-          <img :src="'static/link.png'" alt="">
+          <img src="static/link.png" alt="">
           复制链接
         </div>
         <div>
-          <img :src="'static/invite.png'" alt="">
+          <img src="static/invite.png" alt="">
           邀请朋友
+        </div>
+        <div class="red" @click="endMeeting()">
+          <img src="static/end-meeting.png" alt="">
+          结束会议
         </div>
         <div>
           <span class="flex-center">{{room}}</span>
@@ -132,6 +136,10 @@
         document.execCommand("copy");
         document.body.removeChild(el);
         alert("会议的链接已经复制到剪贴板，请通过邮件，微信等发送给他人即可加入该会议。");
+      },
+      endMeeting() {
+        zg.leaveRoom();
+        this.$router.push({ name: "index"});
       }
     }
   };

@@ -61,10 +61,11 @@
             },
             createRoom() {
                 let room;
-                while (1) { // TODO: 生成一个6位数的房号，注意如果该房号存在了要如何判断去重？
+                let loop = true;
+                while (loop) { // TODO: 生成一个6位数的房号，注意如果该房号存在了要如何判断去重？
                     room = Math.floor(Math.random() * 1000000);
                     if (room > 100000) {
-                        break;
+                        loop = false;
                     }
                 }
                 this.$router.push({

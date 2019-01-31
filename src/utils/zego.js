@@ -40,7 +40,6 @@ function IsPC() {
 }
 
 function enumDevices() {
-    var audioInputList = [], videoInputList = [];
     zg.enumDevices(deviceInfo => {
         console.log("enumDevices", deviceInfo);
         device = deviceInfo;
@@ -50,7 +49,6 @@ function enumDevices() {
 }
 
 var zg,
-    appid = config.appid,
     _config = config._config,
     _otherConfig = config._otherConfig,
     loginRoom = false,
@@ -62,7 +60,6 @@ var zg,
     isPreviewed = false,
     useLocalStreamList = [],
     useLocalStreamAudioList = [];
-var anchor_userid = "", anchro_username = "";
 var device;
 var openRoomCallBack, onStreamUpdatedCallBack;
 
@@ -75,11 +72,11 @@ function leaveRoom() {
         isPreviewed = false;
     }
 
-    for (var i = 0; i < useLocalStreamList.length; i++) {
+    for (let i = 0; i < useLocalStreamList.length; i++) {
         zg.stopPlayingStream(useLocalStreamList[i].stream_id);
     }
 
-    for (var i = 0; i < useLocalStreamAudioList.length; i++) {
+    for (let i = 0; i < useLocalStreamAudioList.length; i++) {
         zg.stopPlayingStream(useLocalStreamAudioList[i].stream_id);
     }
 
@@ -112,8 +109,8 @@ function listen() {
                 onStreamUpdatedCallBack(len + lenVideo);
             } else if (type == 1) {
                 let renderVFlag = false;
-                for (var k = 0; k < useLocalStreamList.length; k++) {
-                    for (var j = 0; j < streamList.length; j++) {
+                for (let k = 0; k < useLocalStreamList.length; k++) {
+                    for (let j = 0; j < streamList.length; j++) {
                         if (useLocalStreamList[k].stream_id === streamList[j].stream_id) {
                             zg.stopPlayingStream(useLocalStreamList[k].stream_id);
                             console.info(useLocalStreamList[k].stream_id + " was devared");
@@ -127,8 +124,8 @@ function listen() {
                     renderRemoteVideos();
                 }
                 let renderAFlag = false;
-                for (var k = 0; k < useLocalStreamAudioList.length; k++) {
-                    for (var j = 0; j < streamList.length; j++) {
+                for (let k = 0; k < useLocalStreamAudioList.length; k++) {
+                    for (let j = 0; j < streamList.length; j++) {
                         if (useLocalStreamAudioList[k].stream_id === streamList[j].stream_id) {
                             zg.stopPlayingStream(useLocalStreamAudioList[k].stream_id);
                             console.info(useLocalStreamAudioList[k].stream_id + " was devared");
@@ -152,7 +149,7 @@ function listen() {
 
 function init() {
 
-    zg = new ZegoClient();
+    zg = new window.ZegoClient();
     zg.setUserStateUpdate(true);//重要  启动用户变化监听
     console.log(_config);
     zg.config(_config);
@@ -410,9 +407,9 @@ function enableScreen(enable) {
     }
 }
 
-console.log("sdk version is", ZegoClient.getCurrentVersion());
-if (ZegoClient.isSupportWebrtc()) {
-    ZegoClient.isSupportH264(result => {
+console.log("sdk version is", window.ZegoClient.getCurrentVersion());
+if (window.ZegoClient.isSupportWebrtc()) {
+    window.ZegoClient.isSupportH264(result => {
         init();
         if (!result) {
             alert("浏览器不支持视频h264编码，不能推拉音频流");

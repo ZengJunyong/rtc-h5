@@ -7,7 +7,7 @@
             </div>
             <div class="video flex-center" v-show="lengthOfRemoteVideo<=3? i<3: i<lengthOfRemoteVideo"
                  :class="r?'':'opacity55'"
-                 v-for="(r,i) in remoteVideo">
+                 v-for="(r,i) in remoteVideo" :key="i">
                 <video v-show="r" class="remoteVideo" autoplay playsinline controls></video>
                 <img v-show="!r" :src="'static/roomset_' + (i+2) + '.png'" alt="">
             </div>
@@ -53,7 +53,7 @@
             </div>
             <div class="none">
                 <audio id="screenAudio" autoplay muted playsinline></audio>
-                <audio v-for="r in remoteVideo" class="remoteAudio" autoplay playsinline></audio>
+                <audio v-for="(r,i) in remoteVideo" :key="i" class="remoteAudio" autoplay playsinline></audio>
             </div>
         </div>
     </div>

@@ -5,7 +5,7 @@
                 <video v-show="previewVideo" id="previewVideo" muted autoplay playsinline controls></video>
                 <img v-show="!previewVideo" src="static/roomset_1.png" alt="">
             </div>
-            <div class="video flex-center" v-show="lengthOfRemoteVideo<=3? i<3: i<lengthOfRemoteVideo"
+            <div class="video flex-center" v-show="i<lengthOfRemoteVideo"
                  :class="r?'':'opacity55'"
                  v-for="(r,i) in remoteVideo" :key="i">
                 <video v-show="r" class="remoteVideo" autoplay playsinline controls></video>
@@ -168,6 +168,8 @@
         padding: 12px 12px 0 12px;
         display: flex;
         flex-wrap: wrap;
+        justify-content: center;;
+        align-items: center;
         height: calc(100% - #{$bottomHeight});
 
 

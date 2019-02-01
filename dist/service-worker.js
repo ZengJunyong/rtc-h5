@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "precache-manifest.9146beba288015f3e76c10881b2b9c0d.js"
+  "precache-manifest.91d73df49a5d16439696b252e25c6749.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "rtc"});

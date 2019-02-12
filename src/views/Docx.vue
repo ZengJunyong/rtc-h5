@@ -1,11 +1,19 @@
 <template>
     <div>
-        Testing docx-templates from browser ...
+        <p>1）获取填充到Word横板中的数据，为JSON格式，如下</p>
+        <textarea v-model="data"></textarea>
+        <p>2）Ajax得到Word横板，存放在 public/static/template.docx</p>
+        <p>3）用 JSON数据 + Word横板 生成新的Word文档，点击
+            <button @click="generateDoc">开始</button>
+            执行
+        </p>
     </div>
 </template>
 
 <script>
   import createReport from "docx-templates";
+
+  const json = require("../config/template.json");
 
   const saveDataToFile = (data, fileName, mimeType) => {
     const blob = new Blob([data], { type: mimeType });
@@ -30,53 +38,21 @@
     name: "docx",
     data() {
       return {
-        data: {
-          "甲方简称": "优客工场",
-          "甲方全称": "北京鹏达优客工场创业投资有限公司",
-          "房间列表": [
-            {
-              "房间号": "102",
-              "工位号": "123",
-              "月租金": "3223"
-            },
-            {
-              "房间号": "103",
-              "工位号": "124",
-              "月租金": "2000"
-            }
-          ],
-          "合计": 5223
-        }
+        data: JSON.stringify(json, null, 4)
       };
     },
-    mounted() {
-      this.$http.get("static/template.docx", { responseType: "arraybuffer" }).then((res) => {
-        this.onTemplateChosen(res.body);
-      });
-    },
     methods: {
+      generateDoc() {
+        this.$http.get("static/template.docx", { responseType: "arraybuffer" }).then((res) => {
+          this.onTemplateChosen(res.body);
+        });
+      },
       async onTemplateChosen(template) {
         // Create report
         console.log("Creating report (can take some time) ...");
         const report = await createReport({
           template,
-          data: {
-            "甲方简称": "优客工场",
-            "甲方全称": "北京鹏达优客工场创业投资有限公司",
-            "房间列表": [
-              {
-                "房间号": "102",
-                "工位号": "123",
-                "月租金": "3223"
-              },
-              {
-                "房间号": "103",
-                "工位号": "124",
-                "月租金": "2000"
-              }
-            ],
-            "合计": 5223
-          }
+          data: JSON.parse(this.data)
         });
 
         // Save report
@@ -91,5 +67,12 @@
 </script>
 
 <style scoped lang="scss">
+    textarea {
+        width: 600px;
+        height: 600px;
+    }
 
+    p {
+        color: green;
+    }
 </style>

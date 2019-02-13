@@ -60,87 +60,95 @@
 </template>
 
 <script>
-    import zg from "@/utils/zego";
+  import zg from "@/utils/zego";
 
-    export default {
-        name: "room",
-        data() {
-            return {
-                previewVideo: false,
-                remoteVideo: [false, false, false, false, false, false, false, false, false, false,
-                    false, false, false, false, false, false, false, false, false],
-                lengthOfRemoteVideo: 0,
-                enableCamera: true,
-                enableMic: true,
-                enableScreen: false
-            };
+  const api = require("../config/api");
+
+  export default {
+    name: "room",
+    data() {
+      return {
+        previewVideo: false,
+        remoteVideo: [false, false, false, false, false, false, false, false, false, false,
+          false, false, false, false, false, false, false, false, false],
+        lengthOfRemoteVideo: 0,
+        enableCamera: true,
+        enableMic: true,
+        enableScreen: false
+      };
+    },
+    beforeCreate() {
+      // Safari on Iphone 上有一个bug，跳转到 room 页面，要强制刷新一下，WebRTC才可使用
+      if (this.$route.params.isSafariOnIphone) {
+        location.reload(true);
+      }
+    },
+    mounted() {
+      zg.openRoom(
+        this.room, 1,
+        document.getElementById("previewVideo"),
+        document.querySelectorAll(".remoteVideo"),
+        document.querySelectorAll(".remoteAudio"),
+        () => {
+          this.previewVideo = true;
+          if (this.$route.query.video === "0") {
+            this.toggleCamera();
+          }
         },
-        beforeCreate() {
-            // Safari on Iphone 上有一个bug，跳转到 room 页面，要强制刷新一下，WebRTC才可使用
-            if (this.$route.params.isSafariOnIphone) {
-                location.reload(true)
-            }
-        },
-        mounted() {
-            zg.openRoom(
-                this.room, 1,
-                document.getElementById("previewVideo"),
-                document.querySelectorAll(".remoteVideo"),
-                document.querySelectorAll(".remoteAudio"),
-                () => {
-                    this.previewVideo = true;
-                    if (this.$route.query.video === "0") {
-                        this.toggleCamera();
-                    }
-                },
-                (len) => {
-                    this.lengthOfRemoteVideo = len;
-                    for (let i = 0; i < this.remoteVideo.length; i++) {
-                        this.remoteVideo.splice(i, 1, i < len);
-                    }
-                });
-        },
-        computed: {
-            room() {
-                return this.$route.query.room + "";
-            },
-            isSupportShareScreen() {
-                return zg.isSupportShareScreen; // 屏幕分享功能只支持桌面系统的Chrome或者Firefox浏览器
-            }
-        },
-        methods: {
-            toggleCamera() {
-                this.enableCamera = !this.enableCamera;
-                zg.enableCamera(this.enableCamera);
-            },
-            toggleMic() {
-                this.enableMic = !this.enableMic;
-                zg.enableMicrophone(this.enableMic);
-            },
-            toggleScreen() {
-                this.enableScreen = !this.enableScreen;
-                zg.enableScreen(this.enableScreen);
-            },
-            copyToClipboard() {
-                let str = "您好，快来加入视频会议吧，我在这儿等你：" + location.origin + "#/room?room=" + this.room;
-                // https://hackernoon.com/copying-text-to-clipboard-with-javascript-df4d4988697f
-                const el = document.createElement("textarea");
-                el.value = str;
-                el.setAttribute("readonly", "");
-                el.style.position = "absolute";
-                el.style.left = "-9999px";
-                document.body.appendChild(el);
-                el.select();
-                document.execCommand("copy");
-                document.body.removeChild(el);
-                alert("会议的链接已经复制到剪贴板，请通过邮件，微信等发送给他人即可加入该会议。");
-            },
-            endMeeting() {
-                zg.leaveRoom();
-                this.$router.push({name: "index"});
-            }
+        (len) => {
+          this.lengthOfRemoteVideo = len;
+          for (let i = 0; i < this.remoteVideo.length; i++) {
+            this.remoteVideo.splice(i, 1, i < len);
+          }
+        });
+    },
+    computed: {
+      room() {
+        return this.$route.query.room + "";
+      },
+      isSupportShareScreen() {
+        return zg.isSupportShareScreen; // 屏幕分享功能只支持桌面系统的Chrome或者Firefox浏览器
+      }
+    },
+    methods: {
+      toggleCamera() {
+        this.enableCamera = !this.enableCamera;
+        zg.enableCamera(this.enableCamera);
+      },
+      toggleMic() {
+        this.enableMic = !this.enableMic;
+        zg.enableMicrophone(this.enableMic);
+      },
+      toggleScreen() {
+        this.enableScreen = !this.enableScreen;
+        zg.enableScreen(this.enableScreen);
+      },
+      copyToClipboard() {
+        let str = "您好，快来加入视频会议吧，我在这儿等你：" + location.origin + "#/room?room=" + this.room;
+        // https://hackernoon.com/copying-text-to-clipboard-with-javascript-df4d4988697f
+        const el = document.createElement("textarea");
+        el.value = str;
+        el.setAttribute("readonly", "");
+        el.style.position = "absolute";
+        el.style.left = "-9999px";
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand("copy");
+        document.body.removeChild(el);
+        alert("会议的链接已经复制到剪贴板，请通过邮件，微信等发送给他人即可加入该会议。");
+      },
+      endMeeting() {
+        zg.leaveRoom();
+
+        // 最后一个人时，才删除该会议编号
+        if (!this.lengthOfRemoteVideo) { // TODO 如果关闭了窗口，如何调用该方法呢？
+          this.$http.post(`${api.url}/conference/removeRoom`, { roomID: this.room });
         }
-    };
+
+        this.$router.push({ name: "index" });
+      }
+    }
+  };
 </script>
 
 <style scoped lang="scss">

@@ -1,9 +1,9 @@
 <template>
     <div>
-        <p>1）获取填充到Word横板中的数据，为JSON格式，如下</p>
+        <p>1）获取填充到Word模板中的数据，为JSON格式，如下</p>
         <textarea v-model="data"></textarea>
-        <p>2）Ajax得到Word横板，存放在 public/static/template.docx</p>
-        <p>3）用 JSON数据 + Word横板 生成新的Word文档，点击
+        <p>2）Ajax得到Word模板，存放在 public/static/template.docx</p>
+        <p>3）用 JSON数据 + Word模板 生成新的Word文档，点击
             <button @click="generateDoc">开始</button>
             执行
         </p>
@@ -14,6 +14,7 @@
   import createReport from "docx-templates";
 
   const json = require("../config/template.json");
+  const nzhcn = require("nzh/cn");
 
   const saveDataToFile = (data, fileName, mimeType) => {
     const blob = new Blob([data], { type: mimeType });
@@ -50,10 +51,12 @@
       async onTemplateChosen(template) {
         // Create report
         console.log("Creating report (can take some time) ...");
-        const report = await createReport({
-          template,
-          data: JSON.parse(this.data)
-        });
+
+        let data = JSON.parse(this.data);
+        data.支付保证金大写 = nzhcn.encodeB(data.支付保证金);
+        data.首期服务费金额大写 = nzhcn.encodeB(data.首期服务费金额);
+
+        const report = await createReport({ template, data });
 
         // Save report
         saveDataToFile(

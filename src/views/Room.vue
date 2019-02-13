@@ -3,13 +3,13 @@
         <div class="room" :class="lengthOfRemoteVideo<=3?'':'scroll'">
             <div class="video flex-center" :class="previewVideo?'':'opacity55'">
                 <video v-show="previewVideo" id="previewVideo" muted autoplay playsinline controls></video>
-                <img v-show="!previewVideo" src="static/roomset_1.png" alt="">
+                <!--<img v-show="!previewVideo" src="static/roomset_1.png" alt="">-->
             </div>
             <div class="video flex-center" v-show="i<lengthOfRemoteVideo"
                  :class="r?'':'opacity55'"
                  v-for="(r,i) in remoteVideo" :key="i">
                 <video v-show="r" class="remoteVideo" autoplay playsinline controls></video>
-                <img v-show="!r" :src="'static/roomset_' + (i+2) + '.png'" alt="">
+                <!--<img v-show="!r" :src="'static/roomset_' + (i+2) + '.png'" alt="">-->
             </div>
         </div>
         <div class="bottom">

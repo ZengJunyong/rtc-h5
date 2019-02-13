@@ -75,6 +75,7 @@
             loop = false;
           }
         }
+        this.$http.post(`${api.url}/conference/addRoom`, { roomID: room });
         this.$router.push({
           name: "room",
           query: { room, video: this.video },

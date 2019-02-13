@@ -49,16 +49,11 @@
         });
       },
       async onTemplateChosen(template) {
-        // Create report
-        console.log("Creating report (can take some time) ...");
-
         let data = JSON.parse(this.data);
         data.支付保证金大写 = nzhcn.encodeB(data.支付保证金);
         data.首期服务费金额大写 = nzhcn.encodeB(data.首期服务费金额);
-
         const report = await createReport({ template, data });
 
-        // Save report
         saveDataToFile(
           report,
           "合同.docx",

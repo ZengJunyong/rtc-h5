@@ -31,51 +31,58 @@
 </template>
 
 <script>
-    export default {
-        name: "index",
-        data() {
-            return {
-                room: "",
-                video: 1,
-                validate: true
-            };
-        },
-        computed: {
-            isSafariOnIphone() {
-                let ua = window.navigator.userAgent;
-                return ua.indexOf("Safari") != -1 && ua.indexOf("Version") != -1 && ua.indexOf("iPhone") != -1;
+  const api = require("../config/api");
+
+  export default {
+    name: "index",
+    data() {
+      return {
+        room: "",
+        video: 1,
+        validate: true
+      };
+    },
+    computed: {
+      isSafariOnIphone() {
+        let ua = window.navigator.userAgent;
+        return ua.indexOf("Safari") != -1 && ua.indexOf("Version") != -1 && ua.indexOf("iPhone") != -1;
+      }
+    },
+    methods: {
+      joinRoom() {
+        let reg = /^^[1-9]\d{5}$$/; // 6位数字的正则表达式
+        if (reg.test(this.room)) {
+          this.$http.get(`${api.url}/conference/isRoomExist`, { params: { roomID: this.room } }).then((res) => {
+            if (!res.data) {
+              return alert(`该会议编号（${this.room}）不存在，请检查一下是否有误？`);
             }
-        },
-        methods: {
-            joinRoom() {
-                let reg = /^^[1-9]\d{5}$$/; // 6位数字的正则表达式
-                if (reg.test(this.room)) {
-                    this.$router.push({
-                        name: "room",
-                        query: {room: this.room},
-                        params: {isSafariOnIphone: this.isSafariOnIphone}
-                    });
-                } else {
-                    this.validate = false;
-                }
-            },
-            createRoom() {
-                let room;
-                let loop = true;
-                while (loop) { // TODO: 生成一个6位数的房号，注意如果该房号存在了要如何判断去重？
-                    room = Math.floor(Math.random() * 1000000);
-                    if (room > 100000) {
-                        loop = false;
-                    }
-                }
-                this.$router.push({
-                    name: "room",
-                    query: {room, video: this.video},
-                    params: {isSafariOnIphone: this.isSafariOnIphone}
-                });
-            }
+            this.$router.push({
+              name: "room",
+              query: { room: this.room },
+              params: { isSafariOnIphone: this.isSafariOnIphone }
+            });
+          });
+        } else {
+          this.validate = false;
         }
-    };
+      },
+      createRoom() {
+        let room;
+        let loop = true;
+        while (loop) { // TODO: 生成一个6位数的房号，注意如果该房号存在了要如何判断去重？
+          room = Math.floor(Math.random() * 1000000);
+          if (room > 100000) {
+            loop = false;
+          }
+        }
+        this.$router.push({
+          name: "room",
+          query: { room, video: this.video },
+          params: { isSafariOnIphone: this.isSafariOnIphone }
+        });
+      }
+    }
+  };
 </script>
 
 <style scoped lang="scss">

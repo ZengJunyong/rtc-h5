@@ -43,16 +43,13 @@
       };
     },
     methods: {
-      generateDoc() {
-        this.$http.get("static/template.docx", { responseType: "arraybuffer" }).then((res) => {
-          this.onTemplateChosen(res.data);
-        });
-      },
-      async onTemplateChosen(template) {
+      async generateDoc() {
+        let res = await this.$http.get("static/template.docx", { responseType: "arraybuffer" });
+
         let data = JSON.parse(this.data);
         data.支付保证金大写 = nzhcn.encodeB(data.支付保证金);
         data.首期服务费金额大写 = nzhcn.encodeB(data.首期服务费金额);
-        const report = await createReport({ template, data });
+        const report = await createReport({ template: res.data, data });
 
         saveDataToFile(
           report,

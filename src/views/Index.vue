@@ -49,18 +49,17 @@
       }
     },
     methods: {
-      joinRoom() {
+      async joinRoom() {
         let reg = /^^[1-9]\d{5}$$/; // 6位数字的正则表达式
         if (reg.test(this.room)) {
-          this.$http.get(`${api.url}/conference/isRoomExist`, { params: { roomID: this.room } }).then((res) => {
-            if (!res.data) {
-              return alert(`该会议编号（${this.room}）不存在，请检查一下是否有误？`);
-            }
-            this.$router.push({
-              name: "room",
-              query: { room: this.room },
-              params: { isSafariOnIphone: this.isSafariOnIphone }
-            });
+          let res = await this.$http.get(`${api.url}/conference/isRoomExist`, { params: { roomID: this.room } });
+          if (!res.data) {
+            return alert(`该会议编号（${this.room}）不存在，请检查一下是否有误？`);
+          }
+          this.$router.push({
+            name: "room",
+            query: { room: this.room },
+            params: { isSafariOnIphone: this.isSafariOnIphone }
           });
         } else {
           this.validate = false;

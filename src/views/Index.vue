@@ -65,13 +65,15 @@
           this.validate = false;
         }
       },
-      createRoom() {
+      async createRoom() {
         let room;
-        let loop = true;
-        while (loop) { // TODO: 生成一个6位数的房号，注意如果该房号存在了要如何判断去重？
+        while (1) { // TODO:
           room = Math.floor(Math.random() * 1000000);
-          if (room > 100000) {
-            loop = false;
+          if (room > 100000) { // 生成一个6位数的房号，且该房间号未使用，否则重新生成一个房间号
+            let res = await this.$http.get(`${api.url}/conference/isRoomExist`, { params: { roomID: room } });
+            if (!res.data) {
+              break;
+            }
           }
         }
         this.$http.post(`${api.url}/conference/addRoom`, { roomID: room, userID: api.userID });

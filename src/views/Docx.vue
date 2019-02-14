@@ -45,7 +45,7 @@
     methods: {
       generateDoc() {
         this.$http.get("static/template.docx", { responseType: "arraybuffer" }).then((res) => {
-          this.onTemplateChosen(res.body);
+          this.onTemplateChosen(res.data);
         });
       },
       async onTemplateChosen(template) {

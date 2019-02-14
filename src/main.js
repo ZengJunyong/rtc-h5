@@ -1,5 +1,5 @@
 import Vue from 'vue'
-const axios = require('axios');
+import axios from 'axios';
 import App from './App.vue'
 import router from './router'
 import './registerServiceWorker'

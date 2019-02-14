@@ -1,5 +1,6 @@
 // import { ZegoClient } from "webrtc-zego";
 import Vue from "vue";
+import axios from 'axios';
 
 const config = require("../config/zego.config.dev");
 
@@ -179,7 +180,7 @@ function openRoom(roomId, type, video, rVideos, rAudios, callback1, callback2) {
     screenCaptrue && zg.stopScreenShot();
 
     //get token
-    Vue.http.get(_otherConfig.token, {
+    axios.get(_otherConfig.token, {
         params: {
             app_id: _config.appid,
             id_name: _config.idName,

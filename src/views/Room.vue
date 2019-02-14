@@ -142,7 +142,7 @@
 
         // 最后一个人时，才删除该会议编号
         if (!this.lengthOfRemoteVideo) { // TODO 如果关闭了窗口，如何调用该方法呢？
-          this.$http.post(`${api.url}/conference/removeRoom`, { roomID: this.room });
+          this.$http.post(`${api.url}/conference/removeRoom`, { roomID: this.room, userID: api.userID });
         }
 
         this.$router.push({ name: "index" });

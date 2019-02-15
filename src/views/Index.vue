@@ -31,7 +31,7 @@
 </template>
 
 <script>
-  const api = require("../config/api");
+  const api = require("../config/api.json");
 
   export default {
     name: "index",

@@ -62,7 +62,7 @@
 <script>
   import zg from "@/utils/zego";
 
-  const api = require("../config/api");
+  const api = require("../config/api.json");
 
   export default {
     name: "room",

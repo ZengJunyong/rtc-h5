@@ -2,6 +2,6 @@
 
 
 module.exports = {
-  url: "http://gyj-urwork86851.codeanyapp.com/-api",
+  url: "https://gyj-urwork86851.codeanyapp.com/-api",
   userID: 1
 };

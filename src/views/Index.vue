@@ -67,16 +67,17 @@
       },
       async createRoom() {
         let room;
-        while (1) { // TODO:
+        let loop = true;
+        while (loop) {
           room = Math.floor(Math.random() * 1000000);
           if (room > 100000) { // 生成一个6位数的房号，且该房间号未使用，否则重新生成一个房间号
             let res = await this.$http.get(`${api.url}/conference/isRoomExist`, { params: { roomID: room } });
             if (!res.data) {
-              break;
+              loop = false;
             }
           }
         }
-        this.$http.post(`${api.url}/conference/addRoom`, { roomID: room, userID: api.userID });
+        this.$http.post(`${api.url}/conference/addRoom`, { roomID: room, userID: 1 });
         this.$router.push({
           name: "room",
           query: { room, video: this.video },

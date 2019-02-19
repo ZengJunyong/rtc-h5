@@ -23,6 +23,11 @@ export default new Router({
       path: "/docx",
       name: "docx",
       component: () => import( /* webpackChunkName: "docx" */"./views/Docx.vue")
+    },
+    {
+      path: "/docx2",
+      name: "docx2",
+      component: () => import( /* webpackChunkName: "docx2" */"./views/Docx2.vue")
     }
   ]
 });

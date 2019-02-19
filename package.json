@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "docx": "^4.7.0",
     "docx-templates": "^2.9.1",
     "nzh": "^1.0.4",
     "register-service-worker": "^1.5.2",

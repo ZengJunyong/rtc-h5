@@ -172,7 +172,7 @@
 
     .flex {
         display: flex;
-        background: url("/static/line.png") center no-repeat;
+        background: url("https://zengjunyong.github.io/rtc-h5/dist/static/line.png") center no-repeat;
 
         > div {
             height: 436px;

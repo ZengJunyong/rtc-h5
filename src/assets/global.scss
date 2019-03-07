@@ -1,6 +1,11 @@
 @charset "UTF-8";
 
+@import url("https://fonts.googleapis.com/css?family=Inconsolata|Lato:300,400|Poiret+One|Titillium+Web:200,400");
+
+@import url(https://fonts.googleapis.com/earlyaccess/notosansscsliced.css);
+
 * {
+  font-family: Lato, Noto Sans SC Sliced, sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -16,10 +21,6 @@ body, html {
 html {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
-}
-
-body {
-  font-family: 'PingFangSC-Regular', Helvetica, 'Hiragino Sans GB W3', arial, sans-serif;
 }
 
 .flex-center {

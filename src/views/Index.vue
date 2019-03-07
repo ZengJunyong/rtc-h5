@@ -1,29 +1,46 @@
 <template>
-    <div class="container">
-        <div class="flex-center logo">
-            <img src="static/logo.png" alt="">
-        </div>
-        <div class="flex">
-            <div>
+    <div class="center">
+        <div class="container">
+            <div id="div1"></div>
+            <div class="flex-center logo">
+                <iframe src="static/logo.svg" width="65" height="66">
+                </iframe>
+            </div>
+
+            <div class="flex">
                 <div>
-                    <h2>加入一场会议</h2>
-                    <input type="number" v-model="room" placeholder="会议编号" required>
-                    <p :class="validate?'':'error'">会议编号是6位数字</p>
-                    <button @click="joinRoom">加入</button>
+                    <div>
+                        <div class="btn _1">
+                            加入一场会议
+                            <div class="attachment"></div>
+                        </div>
+                        <input type="number" v-model="room" placeholder="会议编号" required>
+                        <p :class="validate?'':'error'">会议编号是6位数字</p>
+                        <div @click="joinRoom" class="btn pointer">加入</div>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <div class="btn _2">
+                            发起一场会议
+                            <div class="attachment"></div>
+                        </div>
+                        <div class="radio" style="margin-top: 23px;">
+                            <label for="open">视频开启</label>
+                            <input type="radio" id="open" value="1" v-model="video">
+                        </div>
+                        <div class="radio" style="margin: 15px 0 23px 0;">
+                            <label for="close">视频关闭</label>
+                            <input type="radio" id="close" value="0" v-model="video">
+                        </div>
+                        <div class="btn pointer" @click="createRoom">发起</div>
+                    </div>
                 </div>
             </div>
-            <div>
-                <div>
-                    <h2>发起一场会议</h2>
-                    <div class="radio">
-                        <input type="radio" id="open" value="1" v-model="video">
-                        <label for="open">视频开启</label>
-                    </div>
-                    <div class="radio">
-                        <input type="radio" id="close" value="0" v-model="video">
-                        <label for="close">视频关闭</label>
-                    </div>
-                    <button @click="createRoom">发起</button>
+            <div class="flex-center">
+                <div class="footer">
+                    优客工场·U会议
+                    <br>UCOMMUNE
                 </div>
             </div>
         </div>
@@ -89,40 +106,87 @@
 </script>
 
 <style scoped lang="scss">
+    .center {
+        text-align: center;
+    }
+
+    iframe {
+        border: none
+    }
+
     .container {
+        margin: auto;
         height: 100%;
-        background-color: #ffffff;
-        background-image: url("https://www.transparenttextures.com/patterns/p5.png");
+        min-width: 600px;
+        max-width: 1366px;
     }
 
     .logo {
-        padding: 15px 0 60px 0;
+        padding: 36px 0 10px 0;
+    }
+
+    .btn {
+        background: #FFCC66;
+        color: #404040;
+        border-radius: 7px;
+        padding: 8px;
+        width: 100%;
+        font-size: 19px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+
+    .pointer {
+        cursor: pointer;
+        height: 52px;
+    }
+
+    ._1 {
+        border-bottom-left-radius: 0;
+
+        /*https://www.cnblogs.com/v-weiwang/p/5057588.html 画三角形*/
+        .attachment {
+            position: absolute;
+            bottom: 0;
+            left: -10px;
+            border-style: solid;
+            border-width: 0px 0px 10px 10px;
+            border-color: transparent transparent #FFCC66 transparent;
+        }
+    }
+
+    ._2 {
+        border-bottom-right-radius: 0;
+
+        .attachment {
+            position: absolute;
+            bottom: 0;
+            right: -10px;
+            border-style: solid;
+            border-width: 0px 10px 10px 0px;
+            border-color: transparent transparent #FFCC66 transparent;
+        }
     }
 
     .flex {
         display: flex;
+        background: url("/static/line.png") center no-repeat;
 
         > div {
+            height: 436px;
             flex-grow: 1;
-            padding: 40px 0;
+            padding: 112px 0 0 0;
             text-align: center;
 
-            &:first-child {
-                border-right: 1px solid #d1d1d1;
-            }
-
             > div {
-                width: 200px;
+                width: 206px;
                 margin: auto;
                 text-align: left;
 
-                h2 {
-                    font-size: 28px;
-                    padding-bottom: 25px;
-                }
-
                 p {
-                    color: gray;
+                    color: #999999;
                     padding: 10px 0 20px 0;
                 }
 
@@ -131,28 +195,43 @@
                 }
 
                 .radio {
-                    padding-bottom: 21px;
+                    background: rgba(204, 204, 204, 0.3);
+                    font-size: 15px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 7px 28px;
+                    border-radius: 5px;
+                    color: #666666;
 
                     label {
-                        margin-left: 5px;
+                        flex: 1;
                     }
                 }
 
                 input[type="number"] {
+                    border: none;
+                    height: 51px;
+                    background: rgba(204, 204, 204, 0.3);
+                    border-radius: 5px;
                     display: block;
                     width: 100%;
-                    font-size: 18px;
-                    line-height: 1.5;
-                    padding: 5px;
-                }
-
-                button {
-                    background: #0065f2;
-                    color: white;
-                    width: 100px;
-                    padding: 8px;
+                    font-size: 19px;
+                    padding-left: 12px;
+                    margin-top: 30px;
                 }
             }
         }
+    }
+
+    .footer {
+        width: 458px;
+        border-top: 1px solid rgba(153, 153, 153, 0.42);
+        padding: 15px 0 30px 0;
+        margin-top: 50px;
+        font-size: 16px;
+        font-weight: 400;
+        color: rgba(153, 153, 153, 0.86);
+        line-height: 22px;
     }
 </style>

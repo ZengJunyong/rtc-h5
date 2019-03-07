@@ -38,10 +38,6 @@
                     <img src="static/link.png" alt="">
                     复制链接
                 </div>
-                <div>
-                    <img src="static/invite.png" alt="">
-                    邀请朋友
-                </div>
                 <div class="red" @click="endMeeting()">
                     <img src="static/end-meeting.png" alt="">
                     结束会议
@@ -124,7 +120,7 @@
         zg.enableScreen(this.enableScreen);
       },
       copyToClipboard() {
-        let str = "您好，快来加入视频会议吧，我在这儿等你：" + location.origin + "#/room?room=" + this.room;
+        let str = "您好，快来加入视频会议吧，我在这儿等你：" + location.origin + location.pathname + "#/room?room=" + this.room;
         // https://hackernoon.com/copying-text-to-clipboard-with-javascript-df4d4988697f
         const el = document.createElement("textarea");
         el.value = str;

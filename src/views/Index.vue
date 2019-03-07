@@ -26,12 +26,18 @@
                             <div class="attachment"></div>
                         </div>
                         <div class="radio" style="margin-top: 23px;">
-                            <label for="open">视频开启</label>
-                            <input type="radio" id="open" value="1" v-model="video">
+                            <label class="radio-container">
+                                视频开启
+                                <input type="radio" value="1" v-model="video">
+                                <span class="checkmark"></span>
+                            </label>
                         </div>
                         <div class="radio" style="margin: 15px 0 23px 0;">
-                            <label for="close">视频关闭</label>
-                            <input type="radio" id="close" value="0" v-model="video">
+                            <label class="radio-container">
+                                视频关闭
+                                <input type="radio" value="0" v-model="video">
+                                <span class="checkmark"></span>
+                            </label>
                         </div>
                         <div class="btn pointer" @click="createRoom">发起</div>
                     </div>
@@ -233,5 +239,65 @@
         font-weight: 400;
         color: rgba(153, 153, 153, 0.86);
         line-height: 22px;
+    }
+
+    /*https: //www.w3schools.com/howto/tryit.asp?filename=tryhow_css_custom_radio*/
+    /* The container */
+    .radio-container {
+        display: block;
+        position: relative;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    /* Hide the browser's default radio button */
+    .radio-container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    /* Create a custom radio button */
+    .checkmark {
+        position: absolute;
+        top: 3px;
+        right: 0;
+        height: 16px;
+        width: 16px;
+        background-color: white;
+        border-radius: 50%;
+        border: 1px solid #797979;
+    }
+
+    /* On mouse-over, add a grey background color */
+    .radio-container:hover input ~ .checkmark {
+        background-color: #ccc;
+    }
+
+    /* When the radio button is checked, add a blue background */
+    .radio-container input:checked ~ .checkmark {
+        background-color: #797979;
+    }
+
+    /* Create the indicator (the dot/circle - hidden when not checked) */
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+
+    /* Show the indicator (dot/circle) when checked */
+    .radio-container input:checked ~ .checkmark:after {
+        display: block;
+    }
+
+    /* Style the indicator (dot/circle) */
+    .radio-container .checkmark:after {
+        top: 4px;
+        left: 4px;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: white;
     }
 </style>

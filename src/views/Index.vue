@@ -208,7 +208,7 @@
                     align-items: center;
                     padding: 7px 28px;
                     border-radius: 5px;
-                    color: #666666;
+                    color: #FFFFFF;
 
                     label {
                         flex: 1;

@@ -180,8 +180,8 @@
         .video {
             width: calc(50% - #{$margin});
             height: 50%;
-            background-color: #333333;
-            background-image: url(https://mc.qcloudimg.com/static/img/7da57e0050d308e2e1b1e31afbc42929/bg.png);
+            background-color: #2A2A2A;
+            /*background-image: url(https://mc.qcloudimg.com/static/img/7da57e0050d308e2e1b1e31afbc42929/bg.png);*/
             background-repeat: no-repeat;
             background-size: cover;
             margin-bottom: 6px;

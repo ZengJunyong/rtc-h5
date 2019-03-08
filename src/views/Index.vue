@@ -14,7 +14,7 @@
                             加入一场会议
                             <div class="attachment"></div>
                         </div>
-                        <input type="number" v-model="room" placeholder="会议编号" required>
+                        <input type="text" v-model="room" placeholder="会议编号" required>
                         <p :class="validate?'':'error'">会议编号是6位数字</p>
                         <div @click="joinRoom" class="btn pointer">加入</div>
                     </div>
@@ -215,7 +215,7 @@
                     }
                 }
 
-                input[type="number"] {
+                input[type="text"] {
                     border: none;
                     height: 51px;
                     background: rgba(204, 204, 204, 0.3);
@@ -225,6 +225,7 @@
                     font-size: 19px;
                     padding-left: 12px;
                     margin-top: 30px;
+                    outline: none;
                 }
             }
         }
